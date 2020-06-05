@@ -1,0 +1,42 @@
+body {
+    background-color: #FEEED6;
+    color: #6C6866;
+    font: normal 16px/1.4 sans-serif;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+body > p {
+    margin-top: 5px;
+    margin-bottom: 6px;
+}
+
+#main-header {
+    font-size: 1.6em;
+    font-weight: normal;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    line-height: 1.2em;
+}
+
+.not-relevant {
+    text-decoration-line: line-through;
+}
+
+.text {
+    font-size: 15px;
+    text-indent: 1em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.title {
+    color: #3792B6;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+h3.title {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
