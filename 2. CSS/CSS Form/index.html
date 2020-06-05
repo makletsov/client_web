@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Form</title>
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<form class="callback-form">
+    <label for="name" class="label">Ваше имя</label>
+    <input type="text" id="name"  class="text-field" placeholder="Ваше имя *" required="required">
+
+    <label for="phone" class="label">Ваш номер телефона</label>
+    <input type="text" id="phone"  class="text-field" placeholder="Ваш номер телефона *" required="required">
+
+    <label for="email" class="label">Ваш email или VK</label>
+    <input type="text" id="email"  class="text-field" placeholder="Ваш email или VK *" required="required">
+
+    <label for="comment" class="label">Комментарий</label>
+    <textarea id="comment" placeholder="Комментарий (не обязательно)"></textarea>
+
+    <label class="description">Заполните и отправьте форму и мы перезвоним вам по указанному номеру</label>
+
+    <button type="submit">Отправить заявку</button>
+</form>
+</body>
+</html>

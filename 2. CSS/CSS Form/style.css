@@ -1,0 +1,48 @@
+body {
+    font-family: sans-serif;
+    font-size: 14px;
+    background-color: #FEEED6;
+    color: #6C6866;
+}
+
+form * {
+    display: block;
+}
+
+.callback-form {
+    overflow: hidden;
+    box-sizing: border-box;
+    max-width: 738px;
+    padding: 0 19px;
+}
+
+.label {
+    font-weight: bold;
+    margin: 15px 0 5px;
+}
+
+.text-field, #comment {
+    box-sizing: border-box;
+    border: none;
+    height: 35px;
+    padding: 10px 13px;
+    width: 100%;
+}
+
+#comment {
+    height: 112px;
+}
+
+.description {
+    margin: 15px 0;
+}
+
+
+button {
+    background: #378DB2;
+    font-weight: bold;
+    color: white;
+    border: none;
+    padding: 0.5em 0.9em;
+    margin-left: auto;
+}
