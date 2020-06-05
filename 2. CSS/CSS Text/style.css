@@ -1,4 +1,6 @@
 body {
+    box-sizing: border-box;
+    max-width: 710px;
     background-color: #FEEED6;
     color: #6C6866;
     font: normal 16px/1.4 sans-serif;
@@ -7,6 +9,7 @@ body {
 }
 
 body > p {
+    text-align: justify;
     margin-top: 5px;
     margin-bottom: 6px;
 }
@@ -25,7 +28,7 @@ body > p {
 
 .text {
     font-size: 15px;
-    text-indent: 1em;
+    text-indent: 1rem;
     margin-top: 5px;
     margin-bottom: 10px;
 }
