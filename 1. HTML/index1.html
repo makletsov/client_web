@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,49 +10,79 @@
 <form action="index2.html" method="post">
     <h2>What is your name?</h2>
 
-    <label for="firstName">First name</label>
-    <input type="text" id="firstName" name="firstName" required="required" placeholder="John"/>
-    <label for="lastName">First name</label>
-    <input type="text" id="lastName" name="lastName" required="required" placeholder="Doe"/>
+    <label>
+        First name
+        <input type="text" name="firstName" required="required" placeholder="John"/>
+    </label>
+
+    <label>
+        Last name
+        <input type="text" name="lastName" required="required" placeholder="Doe"/>
+    </label>
+
 
     <h2>What is your gender?</h2>
 
-    <label for="male">Male</label>
-    <input checked="checked" type="radio" id="male" value="1" name="gender"/>
-    <label for="female">Female</label>
-    <input type="radio" id="female" value="2" name="gender"/>
+
+    <label>
+        <input checked="checked" type="radio" value="1" name="gender"/>
+        Male
+    </label>
+
+    <label>
+        <input type="radio" value="2" name="gender"/>
+        Female
+    </label>
 
     <h2>What is your hobby?</h2>
 
-    <label for="football">Football</label>
-    <input type="checkbox" id="football" value="1" name="hobby"/>
-    <label for="music">Music</label>
-    <input type="checkbox" id="music" value="2" name="hobby"/>
-    <label for="videoGames">Video Games</label>
-    <input type="checkbox" id="videoGames" value="3" name="hobby"/>
-    <label for="fishing">Fishing</label>
-    <input type="checkbox" id="fishing" value="4" name="hobby"/>
+
+    <label>
+        <input type="checkbox" value="1" name="hobby"/>
+        Football
+    </label>
+
+    <label>
+        <input type="checkbox" value="2" name="hobby"/>
+        Music
+    </label>
+
+    <label>
+        <input type="checkbox" value="3" name="hobby"/>
+        Video Games
+    </label>
+
+    <label>
+        <input type="checkbox" value="4" name="hobby"/>
+        Fishing
+    </label>
 
     <h2>What is going on?</h2>
 
-    <label for="who">Who are you?</label>
-    <select id="who" multiple="multiple">
-        <option>Potter</option>
-        <option>Dabble</option>
-        <option>Tinker</option>
-    </select>
+    <label>
+        Who are you?
+        <select multiple="multiple">
+            <option>Potter</option>
+            <option>Dabble</option>
+            <option>Tinker</option>
+        </select>
+    </label>
 
-    <label for="what">What is it?</label>
-    <select id="what">
-        <option>Rock</option>
-        <option>Scissors</option>
-        <option>Paper</option>
-    </select>
+    <label>
+        What is it?
+        <select>
+            <option>Rock</option>
+            <option>Scissors</option>
+            <option>Paper</option>
+        </select>
+    </label>
 
     <h2>Tell me about yourself</h2>
 
-    <label for="about">About</label>
-    <textarea id="about" name="about"></textarea>
+    <label>
+        About
+        <textarea name="about"></textarea>
+    </label>
 
     <button type="submit" id="submit">Here goes!</button>
 </form>

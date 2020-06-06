@@ -5,7 +5,7 @@ body {
     color: #6C6866;
 }
 
-form * {
+form *, label * {
     display: block;
 }
 
@@ -16,9 +16,13 @@ form * {
     padding: 0 19px;
 }
 
+label {
+    margin: 15px 0;
+}
+
 .label {
     font-weight: bold;
-    margin: 15px 0 5px;
+    /*margin: 15px 0;*/
 }
 
 .text-field, #comment {
@@ -27,16 +31,12 @@ form * {
     height: 35px;
     padding: 10px 13px;
     width: 100%;
+    margin-top: 5px;
 }
 
 #comment {
     height: 112px;
 }
-
-.description {
-    margin: 15px 0;
-}
-
 
 button {
     background: #378DB2;
