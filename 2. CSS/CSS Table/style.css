@@ -26,18 +26,18 @@
     border: #D3D3D3 solid 1px;
 }
 
-.first-name {
+.table .first-name {
     width: 132px;
 }
 
-.last-name {
+.table .last-name {
     width: 130px;
 }
 
-.job-title {
+.table .job-title {
     width: 250px;
 }
 
-.twitter {
+.table .twitter {
     width: 154px;
 }

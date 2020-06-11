@@ -2,38 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CSS Form</title>
     <link rel="stylesheet" type="text/css" href="normalize.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+<h2 class="main-header">Отправить заявку</h2>git
 <form class="callback-form">
-    <label class="label">
+    <label class="label field-header">
         Ваше имя
         <input type="text" class="text-field" placeholder="Ваше имя *" required="required">
     </label>
 
-    <label class="label">
+    <label class="label field-header">
         Ваш номер телефона
         <input type="text" class="text-field" placeholder="Ваш номер телефона *" required="required">
     </label>
 
-    <label class="label">
+    <label class="label field-header">
         Ваш email или VK
         <input type="text" class="text-field" placeholder="Ваш email или VK *" required="required">
     </label>
 
-    <label class="label">
+    <label class="label field-header">
         Комментарий
-        <textarea id="comment" placeholder="Комментарий (не обязательно)"></textarea>
-    </label>
+        <textarea class="text-field comment" placeholder="Комментарий (не обязательно)"></textarea></label>
 
-    <label class="description">Заполните и отправьте форму и мы перезвоним вам по указанному номеру</label>
+    <label class="label">Заполните и отправьте форму и мы перезвоним вам по указанному номеру</label>
 
-    <button type="submit">Отправить заявку</button>
+    <button type="submit" class="submit">Отправить заявку</button>
 </form>
 </body>
 </html>

@@ -1,31 +1,37 @@
 body {
     font-family: sans-serif;
     font-size: 14px;
-    background-color: #FEEED6;
     color: #6C6866;
 }
 
-form *, label * {
-    display: block;
+.main-header {
+    font-size: 1.8em;
+    font-weight: normal;
+    padding: 0 19px;
+    margin: 5px;
 }
 
 .callback-form {
+    background-color: #FEEED6;
     overflow: hidden;
     box-sizing: border-box;
     max-width: 738px;
-    padding: 0 19px;
+    padding: 14px 19px;
 }
 
-label {
-    margin: 15px 0;
+.callback-form * {
+    display: block;
 }
 
 .label {
-    font-weight: bold;
-    /*margin: 15px 0;*/
+    margin: 15px 0;
 }
 
-.text-field, #comment {
+.field-header {
+    font-weight: bold;
+}
+
+.text-field {
     box-sizing: border-box;
     border: none;
     height: 35px;
@@ -34,15 +40,21 @@ label {
     margin-top: 5px;
 }
 
-#comment {
-    height: 112px;
+.comment {
+    min-height: 112px;
+    resize: vertical;
 }
 
-button {
+.submit {
     background: #378DB2;
     font-weight: bold;
     color: white;
     border: none;
     padding: 0.5em 0.9em;
     margin-left: auto;
+}
+
+.submit:hover {
+    background: #32728D;
+    cursor: pointer;
 }

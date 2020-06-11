@@ -1,25 +1,28 @@
 body {
-    box-sizing: border-box;
-    max-width: 710px;
     background-color: #FEEED6;
     color: #6C6866;
     font: normal 16px/1.4 sans-serif;
+}
+
+.content-pane {
+    box-sizing: border-box;
+    max-width: 710px;
     margin-left: 10px;
     margin-right: 10px;
 }
 
-body > p {
-    text-align: justify;
-    margin-top: 5px;
-    margin-bottom: 6px;
-}
-
-#main-header {
+.content-pane h2 {
     font-size: 1.6em;
     font-weight: normal;
     margin-top: 4px;
     margin-bottom: 12px;
     line-height: 1.2em;
+}
+
+.content-pane p {
+    text-align: justify;
+    margin-top: 5px;
+    margin-bottom: 6px;
 }
 
 .not-relevant {
@@ -33,13 +36,13 @@ body > p {
     margin-bottom: 10px;
 }
 
-.title {
+.list-item {
     color: #3792B6;
     font-weight: bold;
     font-size: 1em;
 }
 
-h3.title {
+.title {
     margin-top: 10px;
     margin-bottom: 0;
 }
