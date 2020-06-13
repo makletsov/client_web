@@ -20,7 +20,7 @@
     height: 45px;
 }
 
-.table td, th {
+.table td, .table th {
     padding: 10px;
     text-align: left;
     border: #D3D3D3 solid 1px;

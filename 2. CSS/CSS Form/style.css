@@ -19,11 +19,8 @@ body {
     padding: 14px 19px;
 }
 
-.callback-form * {
-    display: block;
-}
-
 .label {
+    display: block;
     margin: 15px 0;
 }
 
@@ -32,6 +29,7 @@ body {
 }
 
 .text-field {
+    display: block;
     box-sizing: border-box;
     border: none;
     height: 35px;
@@ -46,6 +44,7 @@ body {
 }
 
 .submit {
+    display: block;
     background: #378DB2;
     font-weight: bold;
     color: white;
