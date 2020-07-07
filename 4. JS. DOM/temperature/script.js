@@ -18,14 +18,14 @@
                 var fahrenheitLabel = document.createElement("p");
                 var kelvinLabel = document.createElement("p");
 
-                fahrenheitLabel.textContent = "Температура в градусах Фаренгейта:" + fahrenheit;
-                kelvinLabel.textContent = "Температура в градусах Кельвина:" + kelvin;
+                fahrenheitLabel.textContent = "Fahrenheit:" + fahrenheit;
+                kelvinLabel.textContent = "Kelvin:" + kelvin;
 
                 container.appendChild(fahrenheitLabel);
                 container.appendChild(kelvinLabel);
             } else {
                 var errorMessage = document.createElement("p");
-                errorMessage.textContent = "Для расчета необходимо ввести значение температуры в градусах Цельсия.";
+                errorMessage.textContent = "Should insert a value of temperature in Celsius.";
                 container.appendChild(errorMessage);
             }
         })
