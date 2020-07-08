@@ -10,10 +10,9 @@
 	function getEvenItemsSum(array) {
 		return array.filter(function (value) {
 			return value % 2 === 0;
-		})
-			.reduce(function (previousValue, item) {
-				return previousValue + item;
-			}, 0);
+		}).reduce(function (previousValue, item) {
+			return previousValue + item;
+		}, 0);
 	}
 
 	var array = [1, 5, 0, 2, 4, 10, 7, 12, 8, 4, 3, 15, 18, -2];

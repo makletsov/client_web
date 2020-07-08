@@ -2,10 +2,9 @@
 	function getEvenSquaresList(array) {
 		return array.filter(function (value) {
 			return value % 2 === 0;
-		})
-			.map(function (value) {
-				return value * value;
-			});
+		}).map(function (value) {
+			return value * value;
+		});
 	}
 
 	var array = [];
