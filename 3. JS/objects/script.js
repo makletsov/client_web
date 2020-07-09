@@ -4,7 +4,7 @@
 			return country.cities.length;
 		}).reduce(function (max, current) {
 			return Math.max(max, current);
-		})
+		});
 
 		return countries.filter(function (country) {
 			return country.cities.length === maxCitiesCount;
@@ -18,7 +18,7 @@
 			populations[country.name] = country.cities.reduce(function (sumPopulation, city) {
 				return sumPopulation + city.population;
 			}, 0);
-		})
+		});
 
 		return populations;
 	}
