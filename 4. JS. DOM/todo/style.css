@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+.container {
+    width: 350px;
+    margin: auto;
+}
+
+.container h1, .input-panel {
+    text-align: center;
+}
+
+.list-item {
+    width: 100%;
+}
+
+.list-item * {
+    margin: 2px;
+}
+
+.label-container {
+    display: inline-block;
+}
