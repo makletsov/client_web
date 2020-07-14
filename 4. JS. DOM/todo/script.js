@@ -3,35 +3,33 @@ document.addEventListener("DOMContentLoaded", function () {
     var inputTextField = document.querySelector(".input-text-field");
 
     addButton.addEventListener("click", function (event) {
-        event.preventDefault();
+        var noteText = inputTextField.value;
 
-        if (!inputTextField.value.trim()) {
-            inputTextField.value = "";
-            inputTextField.set
+        inputTextField.value = "";
+        inputTextField.focus();
 
+        if (!noteText.trim()) {
             return;
         }
 
-        var noteText = inputTextField.value;
-        var noteItem = document.createElement("li");
+        var listItem = document.createElement("li");
 
-        noteItem.tabIndex = 0;
-        noteItem.setAttribute("class", "list-item");
+        listItem.setAttribute("class", "list-item");
 
         function switchToViewMode() {
-            noteItem.innerHTML = "<div class='label-container'><span class='note-text-label'></span></div><button class='edit-button'>Edit</button><button class='delete-button'>Delete</button>";
+            listItem.innerHTML = "<div class='label-container'><span class='note-text-label'></span></div><button class='edit-button'>Edit</button><button class='delete-button'>Delete</button>";
 
-            var noteItemLabel = noteItem.querySelector(".note-text-label");
+            var noteItemLabel = listItem.querySelector(".note-text-label");
             noteItemLabel.textContent = noteText;
 
-            noteItem.querySelector(".edit-button").addEventListener("click", function () {
-                noteItem.innerHTML = "<input type='text' class='edit-text-field'><button class='apply-button'>Apply</button><button class='cancel-button'>Cancel</button>";
+            listItem.querySelector(".edit-button").addEventListener("click", function () {
+                listItem.innerHTML = "<input type='text' class='edit-text-field'><button class='apply-button'>Apply</button><button class='cancel-button'>Cancel</button>";
 
-                var editTextField = noteItem.querySelector(".edit-text-field");
+                var editTextField = listItem.querySelector(".edit-text-field");
                 editTextField.value = noteText;
                 editTextField.select();
 
-                noteItem.querySelector(".apply-button").addEventListener("click", function () {
+                listItem.querySelector(".apply-button").addEventListener("click", function () {
                     if (editTextField.value.trim()) {
                         noteText = editTextField.value;
                     }
@@ -39,22 +37,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     switchToViewMode();
                 });
 
-                noteItem.querySelector(".cancel-button").addEventListener("click", function () {
+                listItem.querySelector(".cancel-button").addEventListener("click", function () {
                     switchToViewMode();
                 });
             });
 
-            noteItem.querySelector(".delete-button").addEventListener("click", function () {
-                noteItem.parentNode.removeChild(noteItem);
+            listItem.querySelector(".delete-button").addEventListener("click", function () {
+                listItem.parentNode.removeChild(listItem);
             });
         }
 
         switchToViewMode();
 
-        var container = document.querySelector(".container");
-        container.appendChild(noteItem);
-
-        inputTextField.value = "";
-        inputTextField.focus();
+        var list = document.querySelector(".notes-list");
+        list.appendChild(listItem);
     })
 });

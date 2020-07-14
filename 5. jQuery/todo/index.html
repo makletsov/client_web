@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="main-container">
         <h1>Todo list</h1>
 
         <div class="input-panel">
-            <input type="text" class="input-text-field">
+            <input type="text" id="note-input-field">
 
-            <button class="add-button">Add note</button>
+            <button id="note-add-button">Add note</button>
         </div>
+        <ul id="notes-list"></ul>
     </div>
 
-    <script src="jquery-3.5.1.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

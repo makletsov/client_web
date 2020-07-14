@@ -4,15 +4,17 @@ $(document).ready(function () {
     $("#note-add-button").click(function () {
         var inputText = $(inputTextField).val();
 
+        inputTextField.val("");
+        inputTextField.focus();
+
         if (!inputText.trim()) {
             return;
         }
 
-        var list = $("#notes-list");
-        var listItem = $('<li></li>');
+        var listItem = $('<li class="list-item"></li>');
 
         function switchToViewMode() {
-            listItem.html('<span class="note-text-label">' + inputText + '</span><button class="edit-button">Edit</button><button class="delete-button">Delete</button>');
+            listItem.html('<span class="note-text-label"></span><button class="edit-button">Edit</button><button class="delete-button">Delete</button>');
             listItem.find(".note-text-label").text(inputText);
 
             listItem.find(".edit-button").click(function () {
@@ -35,9 +37,8 @@ $(document).ready(function () {
         }
 
         switchToViewMode();
-        list.append(listItem);
 
-        inputTextField.val("");
-        inputTextField.focus();
+        var list = $("#notes-list");
+        list.append(listItem);
     });
-})
+});

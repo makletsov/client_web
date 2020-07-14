@@ -6,12 +6,12 @@ body {
     font-family: sans-serif;
 }
 
-.container {
+.main-container {
     width: 350px;
     margin: auto;
 }
 
-.container h1, .input-panel {
+.main-container h1, .input-panel {
     text-align: center;
 }
 
@@ -21,8 +21,4 @@ body {
 
 .list-item * {
     margin: 2px;
-}
-
-.label-container {
-    display: inline-block;
 }
