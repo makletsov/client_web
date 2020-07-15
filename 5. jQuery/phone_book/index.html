@@ -8,8 +8,56 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <h1 class="col-12 text-center mt-4 mb-5">Телефонная книга</h1>
+    </div>
+    <div class="row">
+        <div class="container col-lg-9">
+            <table id="phone-book" class="table table-sm table-bordered">
+                <thead class="table-active">
+                <tr>
+                    <th>№</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Номер телефона</th>
+                    <th class="deletion-column"></th>
+                </tr>
+                </thead>
+                <tbody>
 
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="script.js"></script>
+                </tbody>
+            </table>
+        </div>
+
+        <form id="add-person-form" class="needs-validation container col-lg-2" novalidate>
+            <div class="form-group">
+                <label for="input-name">Имя</label>
+                <input type="text" class="form-control word" id="input-name" placeholder="Имя" required>
+                <div class="invalid-feedback">
+                    Введите имя!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-surname">Фамилия</label>
+                <input type="text" class="form-control word" id="input-surname" placeholder="Фамилия" required>
+                <div class="invalid-feedback">
+                    Введите фамилию!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-phone">Номер телефона</label>
+                <input type="text" class="form-control" id="input-phone" placeholder="Номер телефона" required>
+                <div class="invalid-feedback">
+                    Введите номер телефона!
+                </div>
+            </div>
+            <button id="add-person" type="button" class="btn btn-dark mt-3">Добавить</button>
+        </form>
+    </div>
+</div>
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
