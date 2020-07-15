@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             var errorMessage = document.createElement("p");
             errorMessage.textContent = "Should insert a decimal numeric value of temperature in Celsius.";
-            errorMessage.style.color = "red";
+            errorMessage.classList.add("error");
             container.appendChild(errorMessage);
         }
     })
