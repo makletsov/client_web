@@ -1,3 +1,11 @@
-.deletion-column {
-    min-width: 2rem;
+.form-control {
+    margin-bottom: 2.45rem;
+}
+
+.is-invalid {
+    margin-bottom: 0;
+}
+
+.table td {
+    vertical-align: middle;
 }

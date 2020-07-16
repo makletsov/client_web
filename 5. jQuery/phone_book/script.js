@@ -69,7 +69,7 @@ $(document).ready(function () {
             .append($('<td>' + name + '</td>'))
             .append($('<td>' + surname + '</td>'))
             .append($('<td>' + phone + '</td>'))
-            .append($('<td><button class="delete-row">Удалить</button></td>'));
+            .append($('<td><button type="button" class="close delete-row"><label>&times;</label></button></td>'));
 
         $('tbody').append(newRow);
 
