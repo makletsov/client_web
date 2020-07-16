@@ -82,10 +82,11 @@ $(document).ready(function () {
             newRow.remove();
             recordsCount--;
 
-            $('#phone-book').find('.row-number').filter(function (index, element) {
+            $('#phone-book').find('.row-number').filter(function () {
                 return +$(this).text() >= rowNumber;
             }).each(function () {
-                $(this).text(rowNumber++);
+                $(this).text(rowNumber);
+                rowNumber++;
             });
         });
     });
