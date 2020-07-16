@@ -11,6 +11,10 @@ $(document).ready(function () {
         return text;
     }
 
+    function cleanPhoneNumber() {
+        return this.replace(/[()\- ]/g, "");
+    }
+
     function checkFieldText(field, regexp, func) {
         var text = cleanFieldText.call(field, func);
         var check = text.match(regexp);
@@ -26,7 +30,6 @@ $(document).ready(function () {
 
     var nameRegExp = /[a-zA-Zа-яА-ЯёЁ]+[-?a-zA-Zа-яА-ЯёЁ]+/g;
     var phoneRegExp = /^\+?[0-9]+/g;
-    var phoneCleanRegExp = /[()\- ]/g;
 
     form.find('.word').change(function () {
         $(this).removeClass('is-valid')
@@ -39,9 +42,7 @@ $(document).ready(function () {
         $(this).removeClass('is-valid')
             .removeClass('is-invalid');
 
-        checkFieldText($(this), phoneRegExp, function () {
-            return this.replace(phoneCleanRegExp, "");
-        });
+        checkFieldText($(this), phoneRegExp, cleanPhoneNumber);
     });
 
     var recordsCount = 0;
@@ -61,9 +62,7 @@ $(document).ready(function () {
 
         var name = cleanFieldText.call($('#input-name'));
         var surname = cleanFieldText.call($('#input-surname'));
-        var phone = cleanFieldText.call($('#input-phone'), function () {
-            return this.replace(phoneCleanRegExp, "");
-        });
+        var phone = cleanFieldText.call($('#input-phone'), cleanPhoneNumber);
 
         newRow.append($('<td class="row-number">' + recordsCount + '</td>'))
             .append($('<td>' + name + '</td>'))
