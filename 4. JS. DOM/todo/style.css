@@ -14,7 +14,6 @@ body {
 .container h1, .input-panel {
     text-align: center;
 }
-
 .list-item {
     width: 100%;
 }
@@ -25,4 +24,8 @@ body {
 
 .label-container {
     display: inline-block;
+}
+
+.alert {
+    color: red;
 }

@@ -2,19 +2,24 @@ document.addEventListener("DOMContentLoaded", function () {
     var addButton = document.querySelector(".add-button");
     var inputTextField = document.querySelector(".input-text-field");
 
-    addButton.addEventListener("click", function (event) {
+    addButton.addEventListener("click", function () {
         var noteText = inputTextField.value;
 
         inputTextField.value = "";
         inputTextField.focus();
 
+        var alert = document.querySelector(".alert");
+
         if (!noteText.trim()) {
+            alert.textContent = "Cannot add an empty note. Insert note text in a text field.";
             return;
         }
 
+        alert.textContent = "";
+
         var listItem = document.createElement("li");
 
-        listItem.setAttribute("class", "list-item");
+        listItem.className = "list-item";
 
         function switchToViewMode() {
             listItem.innerHTML = "<div class='label-container'><span class='note-text-label'></span></div><button class='edit-button'>Edit</button><button class='delete-button'>Delete</button>";
