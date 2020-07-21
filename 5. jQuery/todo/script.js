@@ -1,49 +1,52 @@
-$(document).ready(function () {
-    var inputTextField = $("#note-input-field");
+(function ($, undefined) {
+    $(function () {
+        var $inputTextField = $("#note-input-field");
 
-    $("#note-add-button").click(function () {
-        var inputText = inputTextField.val();
+        $("#note-add-button").click(function () {
+            var inputText = $inputTextField.val();
 
-        inputTextField.val("");
-        inputTextField.focus();
+            $inputTextField.val("");
+            $inputTextField.focus();
 
-        var alert = $("#empty-field-alert");
+            var $emptyFieldAlert = $("#empty-field-alert");
 
-        if (!inputText.trim()) {
-            alert.text("Cannot add an empty note. Insert note text in a text field.");
-            return;
-        }
+            if (!inputText.trim()) {
+                $emptyFieldAlert.text("Cannot add an empty note. Insert note text in a text field.");
+                return;
+            }
 
-        alert.text("");
+            $emptyFieldAlert.text("");
 
-        var listItem = $('<li class="list-item"></li>');
+            var $notesListItem = $('<li class="list-item"></li>');
 
-        function switchToViewMode() {
-            listItem.html('<span class="note-text-label"></span><button class="edit-button">Edit</button><button class="delete-button">Delete</button>');
-            listItem.find(".note-text-label").text(inputText);
+            function switchToViewMode() {
+                $notesListItem.html('<span class="note-text-label"></span><button class="edit-button">Edit</button><button class="delete-button">Delete</button>');
+                $notesListItem.find(".note-text-label").text(inputText);
 
-            listItem.find(".edit-button").click(function () {
-                listItem.html('<input type="text" class="edit-text-field"><button class="apply-button">Apply</button><button class="cancel-button">Cancel</button>');
-                listItem.find(".edit-text-field").val(inputText).select();
+                $notesListItem.find(".edit-button").click(function () {
+                    $notesListItem.html('<input type="text" class="edit-text-field"><button class="apply-button">Apply</button><button class="cancel-button">Cancel</button>');
+                    var $editTextField = $notesListItem.find(".edit-text-field");
+                    $editTextField.val(inputText).select();
 
-                listItem.find(".apply-button").click(function () {
-                    inputText = $(".edit-text-field").val();
-                    switchToViewMode();
+                    $notesListItem.find(".apply-button").click(function () {
+                        inputText = $editTextField.val();
+                        switchToViewMode();
+                    });
+
+                    $notesListItem.find(".cancel-button").click(function () {
+                        switchToViewMode();
+                    });
                 });
 
-                listItem.find(".cancel-button").click(function () {
-                    switchToViewMode();
+                $notesListItem.find(".delete-button").click(function () {
+                    $notesListItem.remove();
                 });
-            });
+            }
 
-            listItem.find(".delete-button").click(function () {
-                listItem.remove();
-            });
-        }
+            switchToViewMode();
 
-        switchToViewMode();
-
-        var list = $("#notes-list");
-        list.append(listItem);
+            var $notesList = $("#notes-list");
+            $notesList.append($notesListItem);
+        });
     });
-});
+})(jQuery);
