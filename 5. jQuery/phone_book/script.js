@@ -48,16 +48,17 @@
         });
 
         $form.find('#input-phone').change(function () {
-            $(this).removeClass('is-valid')
+            var $this = $(this);
+            $this.removeClass('is-valid')
                 .removeClass('is-invalid');
 
-            if (!checkFieldText($(this), phoneRegExp, cleanPhoneNumber)) {
+            if (!checkFieldText($this, phoneRegExp, cleanPhoneNumber)) {
                 this.classList.add('is-invalid');
                 $('#invalid-phone-number').text('Введите корректный номер телефона!');
                 return;
             }
 
-            if (isPhoneNumberNotUnique($(this))) {
+            if (isPhoneNumberNotUnique($this)) {
                 this.classList.add('is-invalid');
                 $('#invalid-phone-number').text('Запись с таким номером уже существует!');
                 return;
