@@ -49,6 +49,7 @@
 
         $form.find('#input-phone').change(function () {
             var $this = $(this);
+
             $this.removeClass('is-valid')
                 .removeClass('is-invalid');
 
