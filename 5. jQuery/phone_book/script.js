@@ -20,30 +20,50 @@
             var text = cleanFieldText.call(field, func);
             var check = text.match(regexp);
 
-            if (!check || check.length !== 1 || text !== check[0]) {
-                field.addClass('is-invalid');
-            } else {
-                field.addClass('is-valid');
-            }
+            return check && check.length === 1 && text === check[0];
+        }
+
+        function isPhoneNumberNotUnique(field) {
+            var phoneNumber = cleanFieldText.call(field, cleanPhoneNumber);
+
+            return Array.prototype.some.call($('.phone-number'), function (element) {
+                return element.textContent === phoneNumber;
+            });
         }
 
         var $form = $('#add-person-form');
 
-        var nameRegExp = /[a-zA-Zа-яА-ЯёЁ]+[-?a-zA-Zа-яА-ЯёЁ]+/g;
+        var nameRegExp = /[a-zA-Zа-яА-ЯёЁ]+[-?a-zA-Zа-яА-ЯёЁ]*/g;
         var phoneRegExp = /^\+?[0-9]+/g;
 
         $form.find('.word').change(function () {
             $(this).removeClass('is-valid')
                 .removeClass('is-invalid');
 
-            checkFieldText($(this), nameRegExp);
+            if (checkFieldText($(this), nameRegExp)) {
+                this.classList.add('is-valid');
+            } else {
+                this.classList.add('is-invalid');
+            }
         });
 
         $form.find('#input-phone').change(function () {
             $(this).removeClass('is-valid')
                 .removeClass('is-invalid');
 
-            checkFieldText($(this), phoneRegExp, cleanPhoneNumber);
+            if (!checkFieldText($(this), phoneRegExp, cleanPhoneNumber)) {
+                this.classList.add('is-invalid');
+                $('#invalid-phone-number').text('Введите корректный номер телефона!');
+                return;
+            }
+
+            if (isPhoneNumberNotUnique($(this))) {
+                this.classList.add('is-invalid');
+                $('#invalid-phone-number').text('Запись с таким номером уже существует!');
+                return;
+            }
+
+            this.classList.add('is-valid');
         });
 
         var recordsCount = 0;
@@ -57,13 +77,13 @@
                 return;
             }
 
-            recordsCount++;
-
-            var newRow = $('<tr></tr>');
-
             var name = cleanFieldText.call($('#input-name'));
             var surname = cleanFieldText.call($('#input-surname'));
             var phone = cleanFieldText.call($('#input-phone'), cleanPhoneNumber);
+
+            recordsCount++;
+
+            var newRow = $('<tr></tr>');
 
             /*newRow.append($('<td class="row-number">' + recordsCount + '</td>'))
                 .append($('<td>' + name + '</td>'))
@@ -80,6 +100,7 @@
                 .append($('<td>')
                     .text(surname))
                 .append($('<td>')
+                    .addClass('phone-number')
                     .text(phone))
                 .append($('<td>')
                     .append($('<button>')
