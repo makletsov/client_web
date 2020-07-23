@@ -9,3 +9,7 @@
 .table td {
     vertical-align: middle;
 }
+
+#delete-all-button {
+    display: none;
+}

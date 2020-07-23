@@ -12,11 +12,12 @@
     <div class="row">
         <h1 class="col-12 text-center mt-4 mb-5">Телефонная книга</h1>
     </div>
-    <div class="row">
-        <div class="container col-lg-9">
-            <table id="phone-book" class="table table-sm text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-9 text-center">
+            <table id="phone-book" class="table table-sm">
                 <thead class="thead-light">
                 <tr>
+                    <th><input type="checkbox" id="highlight-all-checkbox" disabled></th>
                     <th>№</th>
                     <th>Фамилия</th>
                     <th>Имя</th>
@@ -28,6 +29,9 @@
 
                 </tbody>
             </table>
+            <div>
+                <button type="button" id="delete-all-button" class="btn btn-dark">Удалить</button>
+            </div>
         </div>
 
         <form id="add-person-form" class="needs-validation container col-lg-2" novalidate>

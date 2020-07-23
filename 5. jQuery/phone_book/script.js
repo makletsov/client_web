@@ -31,6 +31,11 @@
             });
         }
 
+        function disableSelectAllCheckbox() {
+            $highlightAllCheckbox.prop('checked', false);
+            $highlightAllCheckbox.prop('disabled', true);
+        }
+
         var $form = $('#add-person-form');
 
         var nameRegExp = /[a-zA-Zа-яА-ЯёЁ]+[-?a-zA-Zа-яА-ЯёЁ]*/g;
@@ -54,14 +59,16 @@
                 .removeClass('is-invalid');
 
             if (!checkFieldText($this, phoneRegExp, cleanPhoneNumber)) {
-                this.classList.add('is-invalid');
                 $('#invalid-phone-number').text('Введите корректный номер телефона!');
+                this.classList.add('is-invalid');
+
                 return;
             }
 
             if (isPhoneNumberNotUnique($this)) {
-                this.classList.add('is-invalid');
                 $('#invalid-phone-number').text('Запись с таким номером уже существует!');
+                this.classList.add('is-invalid');
+
                 return;
             }
 
@@ -69,6 +76,46 @@
         });
 
         var recordsCount = 0;
+
+        var $highlightAllCheckbox = $('#highlight-all-checkbox');
+
+        $highlightAllCheckbox.click(function () {
+            if ($highlightAllCheckbox.is(':checked')) {
+                $('.highlight-row-checkbox').each(function (index, element) {
+                    $(element).prop('checked', true);
+                    $deleteAllButton.css('display', 'inline-block');
+                });
+            } else {
+                $('.highlight-row-checkbox').each(function (index, element) {
+                    $(element).prop('checked', false);
+                    $deleteAllButton.css('display', 'none');
+                });
+            }
+        });
+
+        var $deleteAllButton = $('#delete-all-button');
+
+        $deleteAllButton.click(function () {
+            var $elementsToRemove = $('.table-row').filter(function (index, element) {
+                return $(element).find('.highlight-row-checkbox').is(':checked');
+            });
+
+            $elementsToRemove.each(function (index, element) {
+                recordsCount--;
+                element.remove();
+            });
+
+            var rowNumber = 1;
+
+            $('#phone-book').find('.row-number').each(function () {
+                $(this).text(rowNumber);
+                rowNumber++;
+            });
+
+            if (recordsCount === 0) {
+                disableSelectAllCheckbox();
+            }
+        });
 
         $form.find('#add-person').click(function () {
             var $fieldsSet = $form.find('.form-control');
@@ -85,7 +132,7 @@
 
             recordsCount++;
 
-            var newRow = $('<tr></tr>');
+            var newRow = $('<tr></tr>').addClass('table-row');
 
             /*newRow.append($('<td class="row-number">' + recordsCount + '</td>'))
                 .append($('<td>' + name + '</td>'))
@@ -94,6 +141,10 @@
                 .append($('<td><button type="button" class="close delete-row"><label>&times;</label></button></td>'));*/
 
             newRow
+                .append($('<td>')
+                    .append($('<input>')
+                        .attr({'type': 'checkbox'})
+                        .addClass('highlight-row-checkbox')))
                 .append($('<td>')
                     .addClass('row-number')
                     .text(recordsCount))
@@ -106,16 +157,36 @@
                     .text(phone))
                 .append($('<td>')
                     .append($('<button>')
-                        .attr({'type':'button'})
+                        .attr({'type': 'button'})
                         .addClass('close delete-row')
                         .append($('<label>')
                             .html('&times;'))));
 
             $('tbody').append(newRow);
 
+            $highlightAllCheckbox.prop('disabled', false);
+
             $fieldsSet.val("");
             $fieldsSet.removeClass('is-valid')
                 .removeClass('is-invalid');
+
+            var $highlightRowCheckbox = newRow.find('.highlight-row-checkbox');
+
+            $highlightRowCheckbox.change(function () {
+                if (!$highlightRowCheckbox.is(':checked')) {
+                    $highlightAllCheckbox.prop('checked', false);
+                }
+
+                var isChecked = Array.prototype.some.call($('.highlight-row-checkbox'), function (element) {
+                    return $(element).is(':checked');
+                });
+
+                if (isChecked) {
+                    $deleteAllButton.css('display', 'inline-block');
+                } else {
+                    $deleteAllButton.css('display', 'none');
+                }
+            });
 
             var $deleteButton = newRow.find('.delete-row');
 
@@ -140,6 +211,10 @@
                     $(this).text(rowNumber);
                     rowNumber++;
                 });
+
+                if (recordsCount === 0) {
+                    disableSelectAllCheckbox();
+                }
             });
         });
     });
