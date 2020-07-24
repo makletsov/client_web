@@ -5,6 +5,7 @@
     <title>Phone Book</title>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,7 +14,7 @@
         <h1 class="col-12 text-center mt-4 mb-5">Телефонная книга</h1>
     </div>
     <div class="row justify-content-center">
-        <div class="col-lg-9 text-center">
+        <div class="col-lg-9 col-xl-8 text-center">
             <table id="phone-book" class="table table-sm">
                 <thead class="thead-light">
                 <tr>
@@ -34,7 +35,7 @@
             </div>
         </div>
 
-        <form id="add-person-form" class="needs-validation container col-lg-2" novalidate>
+        <form id="add-person-form" class="needs-validation container col-lg-3" novalidate>
             <div class="form-group">
                 <label for="input-name">Имя</label>
                 <input type="text" class="form-control word" id="input-name" placeholder="Имя" required>
@@ -55,7 +56,9 @@
                 <div class="invalid-feedback" id="invalid-phone-number">
                 </div>
             </div>
-            <button id="add-person" type="button" class="btn btn-dark mt-3">Добавить</button>
+            <div class="row justify-content-center">
+                <button id="add-person" type="button" class="col-8 col-sm-5 col-lg-11 btn btn-dark mt-3">Добавить</button>
+            </div>
         </form>
     </div>
 </div>

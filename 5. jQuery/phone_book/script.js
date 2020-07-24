@@ -2,7 +2,7 @@
     $(function () {
         'use strict';
 
-        function cleanFieldText(func) {
+        function trimFieldText(func) {
             var text = $(this).val().trim();
 
             if (func) {
@@ -12,19 +12,19 @@
             return text;
         }
 
-        function cleanPhoneNumber() {
+        function normalisePhoneNumber() {
             return this.replace(/[()\- ]/g, "");
         }
 
         function checkFieldText(field, regexp, func) {
-            var text = cleanFieldText.call(field, func);
+            var text = trimFieldText.call(field, func);
             var check = text.match(regexp);
 
             return check && check.length === 1 && text === check[0];
         }
 
         function isPhoneNumberNotUnique(field) {
-            var phoneNumber = cleanFieldText.call(field, cleanPhoneNumber);
+            var phoneNumber = trimFieldText.call(field, normalisePhoneNumber);
 
             return Array.prototype.some.call($('.phone-number'), function (element) {
                 return element.textContent === phoneNumber;
@@ -42,37 +42,37 @@
         var phoneRegExp = /^\+?[0-9]+/g;
 
         $form.find('.word').change(function () {
-            $(this).removeClass('is-valid')
-                .removeClass('is-invalid');
+            var $this = $(this);
+
+            $this.removeClass('is-valid is-invalid');
 
             if (checkFieldText($(this), nameRegExp)) {
-                this.classList.add('is-valid');
+                $this.addClass('is-valid');
             } else {
-                this.classList.add('is-invalid');
+                $this.addClass('is-invalid');
             }
         });
 
         $form.find('#input-phone').change(function () {
             var $this = $(this);
 
-            $this.removeClass('is-valid')
-                .removeClass('is-invalid');
+            $this.removeClass('is-valid is-invalid');
 
-            if (!checkFieldText($this, phoneRegExp, cleanPhoneNumber)) {
+            if (!checkFieldText($this, phoneRegExp, normalisePhoneNumber)) {
                 $('#invalid-phone-number').text('Введите корректный номер телефона!');
-                this.classList.add('is-invalid');
+                $this.addClass('is-invalid');
 
                 return;
             }
 
             if (isPhoneNumberNotUnique($this)) {
                 $('#invalid-phone-number').text('Запись с таким номером уже существует!');
-                this.classList.add('is-invalid');
+                $this.addClass('is-invalid');
 
                 return;
             }
 
-            this.classList.add('is-valid');
+            $this.addClass('is-valid');
         });
 
         var recordsCount = 0;
@@ -95,6 +95,15 @@
 
         var $deleteAllButton = $('#delete-all-button');
 
+        $deleteAllButton.confirmation({
+            rootSelector: '#delete-all-button',
+            singleton: true,
+            placement: 'right',
+            title: 'Удалить выделенные записи?',
+            btnOkLabel: 'Да',
+            btnCancelLabel: 'Нет'
+        });
+
         $deleteAllButton.click(function () {
             var $elementsToRemove = $('.table-row').filter(function (index, element) {
                 return $(element).find('.highlight-row-checkbox').is(':checked');
@@ -114,6 +123,7 @@
 
             if (recordsCount === 0) {
                 disableSelectAllCheckbox();
+                $deleteAllButton.css('display', 'none');
             }
         });
 
@@ -122,23 +132,17 @@
             var validElementsCount = $form.find('.is-valid').length;
 
             if (validElementsCount < 3) {
-                $fieldsSet.trigger('change');
+                $fieldsSet.change();
                 return;
             }
 
-            var name = cleanFieldText.call($('#input-name'));
-            var surname = cleanFieldText.call($('#input-surname'));
-            var phone = cleanFieldText.call($('#input-phone'), cleanPhoneNumber);
+            var name = trimFieldText.call($('#input-name'));
+            var surname = trimFieldText.call($('#input-surname'));
+            var phone = trimFieldText.call($('#input-phone'), normalisePhoneNumber);
 
             recordsCount++;
 
             var newRow = $('<tr></tr>').addClass('table-row');
-
-            /*newRow.append($('<td class="row-number">' + recordsCount + '</td>'))
-                .append($('<td>' + name + '</td>'))
-                .append($('<td>' + surname + '</td>'))
-                .append($('<td>' + phone + '</td>'))
-                .append($('<td><button type="button" class="close delete-row"><label>&times;</label></button></td>'));*/
 
             newRow
                 .append($('<td>')
@@ -167,24 +171,31 @@
             $highlightAllCheckbox.prop('disabled', false);
 
             $fieldsSet.val("");
-            $fieldsSet.removeClass('is-valid')
-                .removeClass('is-invalid');
+            $fieldsSet.removeClass('is-valid is-invalid');
 
             var $highlightRowCheckbox = newRow.find('.highlight-row-checkbox');
 
             $highlightRowCheckbox.change(function () {
-                if (!$highlightRowCheckbox.is(':checked')) {
-                    $highlightAllCheckbox.prop('checked', false);
-                }
+                var $highlightRowCheckboxesSet = $('.highlight-row-checkbox');
 
-                var isChecked = Array.prototype.some.call($('.highlight-row-checkbox'), function (element) {
+                var areSomeChecked = Array.prototype.some.call($highlightRowCheckboxesSet, function (element) {
                     return $(element).is(':checked');
                 });
 
-                if (isChecked) {
+                if (areSomeChecked) {
                     $deleteAllButton.css('display', 'inline-block');
                 } else {
                     $deleteAllButton.css('display', 'none');
+                }
+
+                var areAllChecked = Array.prototype.every.call($highlightRowCheckboxesSet, function (element) {
+                    return $(element).is(':checked');
+                });
+
+                if (areAllChecked) {
+                    $highlightAllCheckbox.prop('checked', true);
+                } else {
+                    $highlightAllCheckbox.prop('checked', false);
                 }
             });
 
@@ -195,8 +206,12 @@
                 singleton: true,
                 placement: 'bottom',
                 title: 'Удалить запись?',
-                btnOkLabel: 'Да',
-                btnCancelLabel: 'Нет',
+                btnOkLabel: ' Да',
+                btnOkIconClass: 'material-icons',
+                btnOkIconContent: 'done_outline',
+                btnCancelLabel: ' Нет',
+                btnCancelIconClass: 'material-icons',
+                btnCancelIconContent: 'cancel'
             });
 
             $deleteButton.click(function () {
@@ -214,8 +229,13 @@
 
                 if (recordsCount === 0) {
                     disableSelectAllCheckbox();
+                    $deleteAllButton.css('display', 'none');
                 }
             });
+        });
+
+        $('body').click(function () {
+            $('.delete-row').confirmation('hide');
         });
     });
 })(jQuery);
