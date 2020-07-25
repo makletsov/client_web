@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var addButton = document.querySelector(".add-button");
     var inputTextField = document.querySelector(".input-text-field");
 
+    inputTextField.focus();
+
     addButton.addEventListener("click", function () {
         var noteText = inputTextField.value;
 
@@ -35,10 +37,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 editTextField.select();
 
                 listItem.querySelector(".apply-button").addEventListener("click", function () {
-                    if (editTextField.value.trim()) {
-                        noteText = editTextField.value;
+                    if (!editTextField.value.trim()) {
+                        alert.textContent = "Cannot add an empty note. Insert note text in a text field.";
+                        editTextField.focus();
+                        return;
                     }
 
+                    alert.textContent = "";
+                    inputTextField.focus();
+
+                    noteText = editTextField.value;
                     switchToViewMode();
                 });
 
