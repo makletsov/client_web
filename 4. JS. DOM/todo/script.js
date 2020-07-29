@@ -5,10 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
     inputTextField.focus();
 
     addButton.addEventListener("click", function () {
+        function removeAlertMessageAndPrepareInput() {
+            alert.textContent = "";
+            inputTextField.focus();
+        }
+
         var noteText = inputTextField.value;
 
         inputTextField.value = "";
-        inputTextField.focus();
 
         var alert = document.querySelector(".alert");
 
@@ -17,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        alert.textContent = "";
+        removeAlertMessageAndPrepareInput();
 
         var listItem = document.createElement("li");
 
@@ -43,14 +47,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
 
-                    alert.textContent = "";
-                    inputTextField.focus();
+                    removeAlertMessageAndPrepareInput();
 
                     noteText = editTextField.value;
                     switchToViewMode();
                 });
 
                 listItem.querySelector(".cancel-button").addEventListener("click", function () {
+                    removeAlertMessageAndPrepareInput();
+
                     switchToViewMode();
                 });
             });
