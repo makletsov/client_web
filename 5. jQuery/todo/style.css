@@ -23,6 +23,6 @@ body {
     margin: 2px;
 }
 
-.alert {
+#empty-field-alert {
     color: red;
 }
