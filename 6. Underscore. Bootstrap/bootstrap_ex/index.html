@@ -8,16 +8,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-container container-fluid justify-content-center">
-        <div class="row justify-content-center">
-            <h1 class="m-3">Todo list</h1>
-        </div>
+    <div class="main-container">
+        <div class="top-container justify-content-center sticky-top pb-4">
+            <div class="title row justify-content-center">
+                <h1 class="m-3">Todo list</h1>
+            </div>
 
 
-        <div class="row justify-content-center">
-            <input type="text" id="note-input-field" class="col-8">
+            <div class="input-panel row justify-content-center ">
+                <input type="text" id="note-input-field" class="col-8">
 
-            <button id="note-add-button" class="btn btn-dark col-4">Add note</button>
+                <button id="note-add-button" class="btn btn-dark col-4">Add note</button>
+            </div>
         </div>
 
 
@@ -25,9 +27,8 @@
             <p id="empty-field-alert" class="text-danger"></p>
         </div>
 
-        <ul id="notes-list"></ul>
+        <ul id="notes-list" class="list-group"></ul>
     </div>
-
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>

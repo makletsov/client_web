@@ -25,68 +25,72 @@ $(function () {
         hideEmptyFieldAlert();
 
         var $notesListItem = $('<li></li>')
-            .addClass("list-item row justify-content-center my-2")
+            .addClass("list-group-item row justify-content-center")
             .append($('<div>')
-                .addClass("note-text-label col-8"))
-            .append($('<button>')
-                .text("Edit")
-                .addClass("edit-button btn btn-dark col-2"))
-            .append($('<button>')
-                .text("Delete")
-                .addClass("delete-button btn btn-danger col-2"));
+                .addClass("note-text-label"))
+            .append($('<div>')
+                .addClass('edit-delete-button-group btn-group mt-2')
+                .append($('<button>')
+                    .text("Edit")
+                    .addClass("edit-button btn btn-dark"))
+                .append($('<button>')
+                    .text("Delete")
+                    .addClass("delete-button btn btn-danger")));
 
         var initialNoteItemHtml = $notesListItem.html();
+
+        $notesListItem.click(function () {
+            $('.cancel-button').click();
+            $('.edit-delete-button-group').css('display', 'none');
+
+            $notesListItem.find('.edit-delete-button-group').css('display', 'inline-flex');
+        });
 
         function switchToViewMode() {
             $notesListItem.html(initialNoteItemHtml);
 
-            /*$notesListItem
-                .find('.note-text-label')
-                //.text('   ' + inputText)
-                .append($('<div>')
-                    .text('label')
-                    .addClass("material-icons pad"))
-                .append($('<div>')
-                    .text(inputText)
-                    .addClass('note-text'));*/
             $notesListItem
                 .find('.note-text-label')
-                .text(inputText)
-                .prepend($('<div>')
-                    .text('label')
-                    .addClass("material-icons pad"));
+                .text(inputText);
 
-            $notesListItem.find(".edit-button").click(function () {
+            $notesListItem.find(".edit-button").click(function (event) {
+                event.stopPropagation();
+
                 $('.cancel-button').click();
 
                 $notesListItem.html('');
 
                 $notesListItem
-                    .append($('<input>')
-                        .attr('type', 'text')
-                        .addClass("edit-text-field col-8"))
-                    .append($('<button>')
-                        .text('Apply')
-                        .addClass('apply-button btn btn-dark col-2'))
-                    .append($('<button>')
-                        .text('Cancel')
-                        .addClass('cancel-button btn btn-danger col-2'));
+                    .append($('<textarea>')
+                        .addClass("edit-text-field col-12"))
+                    .append($('<div>')
+                        .addClass('apply-cancel-button-group btn-group mt-2')
+                        .append($('<button>')
+                            .text("Apply")
+                            .addClass("apply-button btn btn-dark"))
+                        .append($('<button>')
+                            .text("Cancel")
+                            .addClass("cancel-button btn btn-danger")));
 
                 var $editTextField = $notesListItem.find(".edit-text-field");
                 $editTextField.val(inputText).select();
 
-                $notesListItem.find(".apply-button").click(function () {
+                $notesListItem.find(".apply-button").click(function (event) {
+                    event.stopPropagation();
+
                     if ($editTextField.val()) {
                         hideEmptyFieldAlert();
                         inputText = $editTextField.val();
                         switchToViewMode();
                     } else {
+                        /*debugger;*/
                         $editTextField.focus();
                         showEmptyFieldAlert();
                     }
                 });
 
-                $notesListItem.find(".cancel-button").click(function () {
+                $notesListItem.find(".cancel-button").click(function (event) {
+                    event.stopPropagation();
                     switchToViewMode();
                 });
             });
