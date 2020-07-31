@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo list</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="top-container justify-content-center sticky-top pb-4">
+            <div class="title row justify-content-center">
+                <h1 class="m-3">Todo list</h1>
+            </div>
+
+            <div class="input-panel row justify-content-center ">
+                <input type="text" id="note-input-field" class="col-8">
+
+                <button id="note-add-button" class="btn btn-dark col-4">Add note</button>
+
+                <div id="input-field-alert" class="invalid-feedback text-center">
+                    Cannot create an empty note!
+                </div>
+            </div>
+        </div>
+
+        <ul id="notes-list" class="list-group"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
