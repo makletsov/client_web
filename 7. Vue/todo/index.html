@@ -4,30 +4,54 @@
     <meta charset="UTF-8">
     <title>Todo list</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-container container">
-        <div class="top-container justify-content-center sticky-top pb-4">
-            <div class="title row justify-content-center">
-                <h1 class="m-3">Todo list</h1>
-            </div>
-
-            <div class="input-panel row justify-content-center ">
-                <input type="text" id="note-input-field" class="col-8">
-
-                <button id="note-add-button" class="btn btn-dark col-4">Add note</button>
-
-                <div id="input-field-alert" class="invalid-feedback text-center">
-                    Cannot create an empty note!
-                </div>
-            </div>
-        </div>
-
-        <ul id="notes-list" class="list-group"></ul>
+    <div id="main-container" v-cloak>
+        <todo-list></todo-list>
     </div>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script id="todo-list-template" type="text/x-template">
+        <div>
+            <h1>Todo list</h1>
+            <input v-model="inputText"
+                   @click="switchAllItemsToLeanMode"/>
+            <button type="button" @click="addItem">Add note</button>
+
+            <ul>
+                <list-item v-for="item in items"
+                           :key="item.id"
+                           :item="item"
+                           @delete-item="deleteItem"
+                           @switch-to-extended-mode="switchItemToExtendedMode"
+                           @switch-to-editing-mode="switchItemToEditingMode"
+                           @switch-to-lean-mode="switchItemToLeanMode"
+                           @set-text="setItemText"></list-item>
+            </ul>
+        </div>
+    </script>
+
+    <script id="list-item-template" type="text/x-template">
+        <li @click="switchToExtendedMode">
+            <div v-if="item.isEditing">
+                <input ref="edit" @click.stop="$event.target.select()"
+                       v-model="newText">
+            </div>
+            <div v-else>
+                {{ item.text }}
+            </div>
+            <div v-if="item.isExtended">
+                <button type="button" @click.stop="switchToEditingMode">Edit</button>
+                <button type="button" @click="deleteItem">Delete</button>
+            </div>
+            <div v-if="item.isEditing">
+                <button type="button" @click.stop="setText">Save</button>
+                <button type="button" @click="cancelEditingMode">Cancel</button>
+            </div>
+        </li>
+    </script>
+
+    <script src="node_modules/vue/dist/vue.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
