@@ -30,9 +30,29 @@ $(function () {
         });
     }
 
-    function disableSelectAllCheckbox() {
+    function disableHighlightAllCheckbox() {
         $highlightAllCheckbox.prop('checked', false);
         $highlightAllCheckbox.prop('disabled', true);
+    }
+
+    function hideIfNoneChecked(element) {
+        var areSomeChecked = Array.prototype.some.call($('.highlight-row-checkbox'), function (checkbox) {
+            return $(checkbox).is(':checked');
+        });
+
+        if (areSomeChecked) {
+            element.show();
+        } else {
+            element.hide();
+        }
+    }
+
+    function toggleIfAllChecked(element) {
+        var areAllChecked = Array.prototype.every.call($('.highlight-row-checkbox'), function (checkbox) {
+            return $(checkbox).is(':checked');
+        });
+
+        element.prop('checked', areAllChecked);
     }
 
     var $form = $('#add-person-form');
@@ -80,30 +100,30 @@ $(function () {
 
     $highlightAllCheckbox.click(function () {
         if ($highlightAllCheckbox.is(':checked')) {
-            $('.highlight-row-checkbox').each(function (index, element) {
-                $(element).prop('checked', true);
-                $deleteAllButton.css('display', 'inline-block');
-            });
+            $('.highlight-row-checkbox').prop('checked', true);
+            $deleteSomeLinesButton.show();
         } else {
-            $('.highlight-row-checkbox').each(function (index, element) {
-                $(element).prop('checked', false);
-                $deleteAllButton.css('display', 'none');
-            });
+            $('.highlight-row-checkbox').prop('checked', false);
+            $deleteSomeLinesButton.hide();
         }
     });
 
-    var $deleteAllButton = $('#delete-all-button');
+    var $deleteSomeLinesButton = $('#delete-some-lines-button');
 
-    $deleteAllButton.confirmation({
+    $deleteSomeLinesButton.confirmation({
         rootSelector: '#delete-all-button',
         singleton: true,
         placement: 'right',
-        title: 'Удалить выделенные записи?',
-        btnOkLabel: 'Да',
-        btnCancelLabel: 'Нет'
+        title: 'Удалить записи?',
+        btnOkLabel: ' Да',
+        btnOkIconClass: 'material-icons',
+        btnOkIconContent: 'done_outline',
+        btnCancelLabel: ' Нет',
+        btnCancelIconClass: 'material-icons',
+        btnCancelIconContent: 'cancel'
     });
 
-    $deleteAllButton.click(function () {
+    $deleteSomeLinesButton.click(function () {
         var $elementsToRemove = $('.table-row').filter(function (index, element) {
             return $(element).find('.highlight-row-checkbox').is(':checked');
         });
@@ -121,9 +141,10 @@ $(function () {
         });
 
         if (recordsCount === 0) {
-            disableSelectAllCheckbox();
-            $deleteAllButton.css('display', 'none');
+            disableHighlightAllCheckbox();
         }
+
+        $deleteSomeLinesButton.hide();
     });
 
     $form.find('#add-person').click(function () {
@@ -145,8 +166,7 @@ $(function () {
 
         newRow
             .append($('<td>')
-                .append($('<input>')
-                    .attr({'type': 'checkbox'})
+                .append($('<input type="checkbox">')
                     .addClass('highlight-row-checkbox')))
             .append($('<td>')
                 .addClass('row-number')
@@ -175,27 +195,8 @@ $(function () {
         var $highlightRowCheckbox = newRow.find('.highlight-row-checkbox');
 
         $highlightRowCheckbox.change(function () {
-            var $highlightRowCheckboxesSet = $('.highlight-row-checkbox');
-
-            var areSomeChecked = Array.prototype.some.call($highlightRowCheckboxesSet, function (element) {
-                return $(element).is(':checked');
-            });
-
-            if (areSomeChecked) {
-                $deleteAllButton.css('display', 'inline-block');
-            } else {
-                $deleteAllButton.css('display', 'none');
-            }
-
-            var areAllChecked = Array.prototype.every.call($highlightRowCheckboxesSet, function (element) {
-                return $(element).is(':checked');
-            });
-
-            if (areAllChecked) {
-                $highlightAllCheckbox.prop('checked', true);
-            } else {
-                $highlightAllCheckbox.prop('checked', false);
-            }
+            hideIfNoneChecked($deleteSomeLinesButton);
+            toggleIfAllChecked($highlightAllCheckbox);
         });
 
         var $deleteButton = newRow.find('.delete-row');
@@ -226,9 +227,10 @@ $(function () {
                 rowNumber++;
             });
 
+            hideIfNoneChecked($deleteSomeLinesButton);
+
             if (recordsCount === 0) {
-                disableSelectAllCheckbox();
-                $deleteAllButton.css('display', 'none');
+                disableHighlightAllCheckbox();
             }
         });
     });
