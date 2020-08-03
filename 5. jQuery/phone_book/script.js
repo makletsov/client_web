@@ -180,7 +180,6 @@ $(function () {
                 .text(phone))
             .append($('<td>')
                 .append($('<button>')
-                    .attr({'type': 'button'})
                     .addClass('close delete-row')
                     .append($('<label>')
                         .html('&times;'))));
