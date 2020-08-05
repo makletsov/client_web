@@ -16,7 +16,7 @@ body {
     background: #cfcccc;
 }
 
-#note-add-button {
+.note-add-button {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     margin-left: -1px;
@@ -26,13 +26,15 @@ body {
     border-color: #343a40;
 }
 
+.note-text-label,
 .edit-delete-button-group,
 .apply-cancel-button-group {
-    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .edit-delete-button-group {
-    display: none;
+    display: inline-flex;
 }
 
 .note-text-label {
@@ -44,8 +46,8 @@ body {
     width: 100%;
 }
 
-#input-field-alert,
-#edit-field-alert {
+.input-field-alert,
+.edit-field-alert {
     display: block;
     height: 0;
     opacity: 0;
@@ -53,8 +55,8 @@ body {
     transition: visibility 0s linear 0.6s, opacity 0.6s ease-in-out, height 0.6s ease-in-out;
 }
 
-.is-invalid ~ #input-field-alert,
-.is-invalid ~ #edit-field-alert {
+.is-invalid ~ .input-field-alert,
+.is-invalid ~ .edit-field-alert {
     opacity: 1;
     height: 1.5rem;
     visibility: visible;
@@ -62,13 +64,15 @@ body {
 }
 
 .edit-text-field:focus,
-#note-input-field:focus {
+.note-input-field:focus {
     border-color: #647480;
     box-shadow: none;
+    lighting-color: rgba(0, 0, 0, 0);
+    background-size: contain;
 }
 
 .edit-text-field::selection,
-#note-input-field::selection {
+.note-input-field::selection {
     color: #ffffff;
     background-color: #343a40;
 }

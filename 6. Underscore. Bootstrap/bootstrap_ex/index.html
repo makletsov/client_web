@@ -2,32 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Todo list</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TodoList</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="main-container container">
-        <div class="top-container justify-content-center sticky-top pb-4">
+        <div class="top-container text-center sticky-top pb-4">
             <div class="title row justify-content-center">
-                <h1 class="m-3">Todo list</h1>
+                <h1 class="col-12 m-3">TodoList</h1>
             </div>
 
             <div class="input-panel row justify-content-center ">
-                <input type="text" id="note-input-field" class="col-8">
+                <input type="text" class="note-input-field col-8">
 
-                <button id="note-add-button" class="btn btn-dark col-4">Add note</button>
+                <button class="note-add-button btn btn-dark col-4">Add note</button>
 
-                <div id="input-field-alert" class="invalid-feedback text-center">
+                <div class="input-field-alert invalid-feedback text-center">
                     Cannot create an empty note!
                 </div>
             </div>
         </div>
 
-        <ul id="notes-list" class="list-group"></ul>
+        <ul class="notes-list list-group"></ul>
     </div>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="node_modules/bootstrap-confirmation2/dist/bootstrap-confirmation.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
