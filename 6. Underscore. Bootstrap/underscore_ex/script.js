@@ -53,17 +53,20 @@
     ];
 
     var averageAge = _.reduce(people, function (memo, person) {
-        return memo + (person.age);
+        return memo + person.age;
     }, 0) / people.length;
 
     console.log('An average age of all people in the list is: ' + Math.ceil(averageAge * 100) / 100 + ' years.');
 
-    var twentyToThirtyYearsOldPeopleListSortedByAgeDescending = _.chain(people).filter(function (person) {
-        return person.age >= 20 && person.age <= 30;
-    }).sortBy('age').value();
+    var twentyToThirtyYearsOldPeopleListSortedByAgeAscending = _.chain(people)
+        .filter(function (person) {
+            return person.age >= 20 && person.age <= 30;
+        })
+        .sortBy('age')
+        .value();
 
     console.log('List of people are between 20 and 30 years old ages by descending: ');
-    _.each(twentyToThirtyYearsOldPeopleListSortedByAgeDescending, function (person) {
+    _.each(twentyToThirtyYearsOldPeopleListSortedByAgeAscending, function (person) {
         console.log(person.age);
     });
 
