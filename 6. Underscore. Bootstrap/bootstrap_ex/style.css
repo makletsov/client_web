@@ -77,7 +77,14 @@ body {
     background-color: #343a40;
 }
 
-.cancel-button, .delete-button {
+.cancel-button,
+.cancel-button:not(:disabled):not(.disabled):focus,
+.cancel-button:not(:disabled):not(.disabled):active,
+.cancel-button:not(:disabled):not(.disabled):hover,
+.delete-button,
+.delete-button:not(:disabled):not(.disabled):focus,
+.delete-button:not(:disabled):not(.disabled):active,
+.delete-button:not(:disabled):not(.disabled):hover {
     border-color: #343a40;
     border-style: solid;
     border-width: 1px;
