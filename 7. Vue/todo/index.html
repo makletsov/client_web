@@ -5,22 +5,33 @@
     <title>Todo list</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
-    <script src="../../6. Underscore. Bootstrap/bootstrap_ex/script.js"></script>
 </head>
 <body>
-    <div class="main-container container" v-cloak>
+    <div id="main-container" class="main-container container"
+         v-cloak>
         <todo-list></todo-list>
     </div>
 
-    <script id="todo-list-template" type="text/x-template">
+    <script id="todo-list-template"
+            type="text/x-template">
         <div>
             <div class="top-container text-center sticky-top pb-4">
                 <div class="title row justify-content-center">
                     <h1 class="col-12 m-3">TodoList</h1>
                 </div>
                 <div class="input-panel row justify-content-center">
-                    <input ref="input" v-model="inputText" @click="switchAllItemsToLeanMode" class="note-input-field col-8"/>
-                    <button type="button" @click="addItem" class="note-add-button btn btn-dark col-4">Add note</button>
+                    <input ref="input"
+                           v-model="inputText"
+                           @click="switchAllItemsToLeanMode"
+                           @input="hideInputWarning"
+                           class="note-input-field col-8"
+                           :class="{'is-invalid': isInvalidInput }"/>
+                    <button type="button"
+                            @click="addItem"
+                            class="note-add-button btn btn-dark col-4">Add note</button>
+                    <div class="input-field-alert invalid-feedback text-center">
+                        Cannot create an empty note!
+                    </div>
                 </div>
             </div>
             <ul class="list-group">
@@ -37,20 +48,40 @@
     </script>
 
     <script id="list-item-template" type="text/x-template">
-        <li @click="switchToExtendedMode" class="list-item list-group-item row justify-content-center">
+        <li @click="switchToExtendedMode"
+            class="list-item list-group-item row justify-content-center">
             <div v-if="item.isEditing">
-                <textarea ref="edit" @click.stop="$event.target.select()" v-model="newText" class="edit-text-field form-control col-12"></textarea>
+                <textarea ref="edit"
+                          @click.stop="$event.target.select()"
+                          @input="isInvalid = (newText.trim().length === 0)"
+                          v-model="newText"
+                          class="edit-text-field form-control col-12"
+                          :class="{'is-invalid': isInvalid }"></textarea>
+                <div class="input-field-alert invalid-feedback text-center">
+                    Cannot create an empty note!
+                </div>
             </div>
-            <div v-else class="note-text-label col-12">
+            <div v-else
+                 class="note-text-label col-12">
                 {{ item.text }}
             </div>
-            <div v-if="item.isExtended" class="edit-delete-button-group btn-group mt-2 col-12">
-                <button type="button" @click.stop="switchToEditingMode" class="btn btn-dark">Edit</button>
-                <button type="button" @click="deleteItem" class="btn btn-danger">Delete</button>
+            <div v-if="item.isExtended"
+                 class="edit-delete-button-group btn-group mt-2 col-12">
+                <button type="button"
+                        @click.stop="switchToEditingMode"
+                        class="btn btn-dark">Edit</button>
+                <button type="button"
+                        @click="deleteItem"
+                        class="btn btn-danger">Delete</button>
             </div>
-            <div v-if="item.isEditing" class="save-cancel-button-group btn-group col-12 mt-2">
-                <button type="button" @click.stop="setText" class="btn btn-dark">Save</button>
-                <button type="button" @click="cancelEditingMode" class="btn btn-danger">Cancel</button>
+            <div v-if="item.isEditing"
+                 class="save-cancel-button-group btn-group col-12 mt-2">
+                <button type="button"
+                        @click.stop="setText"
+                        class="btn btn-dark">Save</button>
+                <button type="button"
+                        @click="cancelEditingMode"
+                        class="btn btn-danger">Cancel</button>
             </div>
         </li>
     </script>

@@ -67,8 +67,6 @@ body {
 .note-input-field:focus {
     border-color: #647480;
     box-shadow: none;
-    lighting-color: rgba(0, 0, 0, 0);
-    background-size: contain;
 }
 
 .edit-text-field::selection,
