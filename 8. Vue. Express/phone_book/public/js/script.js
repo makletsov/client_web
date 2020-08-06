@@ -38,8 +38,6 @@ var vm = new Vue({
             });
         },
         addContact: function () {
-            console.log(this.firstName + this.lastName + this.phone);
-
             var self = this;
 
             post('contacts/add', {
@@ -49,14 +47,11 @@ var vm = new Vue({
                     phone: this.phone
                 }
             }).done(function (data) {
-                if (!data.success) {
-                    alert(data.message);
-                    return;
-                }
-
                 self.loadContacts();
-            }).fail(function () {
-                alert('Contact addition error!');
+            }).fail(function (data) {
+                if (!data.responseJSON.success) {
+                    alert(data.responseJSON.message);
+                }
             });
         },
         deleteContact: function (contact) {

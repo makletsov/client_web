@@ -18,13 +18,9 @@ router.post('/contacts/delete', function (req, res) {
   var id = +req.body.id;
   var message = '';
 
-  console.log(req.body);
-
   var hasContact = contacts.some(function (contact) {
     return contact.id === id;
   });
-
-  console.log(hasContact);
 
   if (hasContact) {
     contacts = contacts.filter(function (contact) {
@@ -41,59 +37,89 @@ router.post('/contacts/delete', function (req, res) {
 });
 
 router.post('/contacts/add', function (req, res) {
+  function sendErrorRequest(status, message) {
+    res.status(status).send({
+      success: false,
+      message: message
+    });
+  }
+
+  function checkProperty(property, regexp) {
+    var check = property.match(regexp);
+
+    return check && check.length === 1 && property === check[0];
+  }
+
+  function normalisePhoneNumber() {
+    return this.replace(/[()\- ]/g, "");
+  }
+
   var contact = req.body.contact;
 
-  console.log(contact);
-
   if (!contact) {
-    res.send({
-      success: false,
-      message: 'Contact to add should be transferred in a request body!'
-    });
+    sendErrorRequest(400,'Contact to add should be transferred in a request body!');
     return;
   }
 
+  for (var property in contact) {
+    property = property.trim();
+  }
+
+  contact.phone = normalisePhoneNumber.call(contact.phone);
+
   if (!contact.firstName) {
-    res.send({
-      success: false,
-      message: 'Contact to add should contain the first name!'
-    });
+    sendErrorRequest(400,'Contact to add should contain the first name!');
     return;
   }
 
   if (!contact.lastName) {
-    res.send({
-      success: false,
-      message: 'Contact to add should contain the last name!'
-    });
+    sendErrorRequest(400,'Contact to add should contain the last name!');
     return;
   }
 
   if (!contact.phone) {
-    res.send({
-      success: false,
-      message: 'Contact to add should contain a phone number!'
-    });
+    sendErrorRequest(400,'Contact to add should contain a phone number!');
     return;
   }
 
-  //TODO валидация, проверка повторяющихся номеров
+  var nameRegExp = /[a-zA-Zа-яА-ЯёЁ]+[-?a-zA-Zа-яА-ЯёЁ]*/g;
+
+  if (!checkProperty(contact.firstName, nameRegExp)) {
+    sendErrorRequest(400,'Contact to add has an incorrect first name!');
+    return;
+  }
+
+  if (!checkProperty(contact.lastName, nameRegExp)) {
+    sendErrorRequest(400,'Contact to add has an incorrect last name!');
+    return;
+  }
+
+  var phoneRegExp = /^\+?[0-9]+/g;
+
+  if (!checkProperty(contact.phone, phoneRegExp)) {
+    sendErrorRequest(400,'Contact to add has an incorrect phone number!');
+    return;
+  }
+
+  var isRepeat = contacts.some(function (c) {
+    return c.phone === contact.phone;
+  });
+
+  if (isRepeat) {
+    sendErrorRequest(409, 'The contact with the same phone number is already exist in the phone book!');
+    return;
+  }
 
   contact.id = newContactId;
   newContactId++;
 
-  console.log(contact);
-
   contacts.push(contact);
-
-  console.log(contacts);
 
   res.send({
     success: true
   })
 });
 
-/* GET home page. */
 router.get('/', function(req, res) {
   res.render('index');
 });
