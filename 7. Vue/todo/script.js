@@ -24,6 +24,7 @@ Vue.component('list-item', {
         },
         switchToEditingMode: function () {
             this.$emit('switch-to-editing-mode', this.item);
+            this.$refs.edit.select();                               //TODO вызываем .select() у textarea
         },
         switchToLeanMode: function () {
             this.$emit('switch-to-lean-mode', this.item);
@@ -111,8 +112,8 @@ Vue.component('todo-list', {
         }
     },
     template: '#todo-list-template'
-})
+});
 
 new Vue({
     el: '#main-container'
-})
+});

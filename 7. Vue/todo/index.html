@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="main-container" class="main-container container"
+    <div id="main-container"
+         class="main-container container"
          v-cloak>
         <todo-list></todo-list>
     </div>
@@ -19,6 +20,7 @@
                 <div class="title row justify-content-center">
                     <h1 class="col-12 m-3">TodoList</h1>
                 </div>
+
                 <div class="input-panel row justify-content-center">
                     <input ref="input"
                            v-model="inputText"
@@ -26,14 +28,17 @@
                            @input="hideInputWarning"
                            class="note-input-field col-8"
                            :class="{'is-invalid': isInvalidInput }"/>
+
                     <button type="button"
                             @click="addItem"
                             class="note-add-button btn btn-dark col-4">Add note</button>
+
                     <div class="input-field-alert invalid-feedback text-center">
                         Cannot create an empty note!
                     </div>
                 </div>
             </div>
+
             <ul class="list-group">
                 <list-item v-for="item in items"
                            :key="item.id"
@@ -50,35 +55,42 @@
     <script id="list-item-template" type="text/x-template">
         <li @click="switchToExtendedMode"
             class="list-item list-group-item row justify-content-center">
-            <div v-if="item.isEditing">
+            <div v-show="item.isEditing">
                 <textarea ref="edit"
                           @click.stop="$event.target.select()"
                           @input="isInvalid = (newText.trim().length === 0)"
                           v-model="newText"
                           class="edit-text-field form-control col-12"
                           :class="{'is-invalid': isInvalid }"></textarea>
+
                 <div class="input-field-alert invalid-feedback text-center">
                     Cannot create an empty note!
                 </div>
             </div>
-            <div v-else
+
+            <div v-show="!item.isEditing"
                  class="note-text-label col-12">
                 {{ item.text }}
             </div>
-            <div v-if="item.isExtended"
+
+            <div v-show="item.isExtended"
                  class="edit-delete-button-group btn-group mt-2 col-12">
                 <button type="button"
                         @click.stop="switchToEditingMode"
                         class="btn btn-dark">Edit</button>
-                <button type="button"
+
+                <button ref="deleteButton"
+                        type="button"
                         @click="deleteItem"
-                        class="btn btn-danger">Delete</button>
+                        class="delete btn btn-danger"
+                        data-toggle="confirmation">Delete</button>
             </div>
-            <div v-if="item.isEditing"
+            <div v-show="item.isEditing"
                  class="save-cancel-button-group btn-group col-12 mt-2">
                 <button type="button"
                         @click.stop="setText"
                         class="btn btn-dark">Save</button>
+
                 <button type="button"
                         @click="cancelEditingMode"
                         class="btn btn-danger">Cancel</button>
@@ -86,6 +98,8 @@
         </li>
     </script>
 
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="script.js"></script>
 </body>
