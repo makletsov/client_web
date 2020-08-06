@@ -7,8 +7,11 @@ Vue.component('list-item', {
     },
     data: function () {
         return {
-            newText: this.item.text
+            newText: this.item.text,
         }
+    },
+    mounted: function () {
+        console.log(this.$refs);
     },
     methods: {
         deleteItem: function () {
@@ -18,15 +21,13 @@ Vue.component('list-item', {
             this.$emit('switch-to-extended-mode', this.item);
         },
         switchToEditingMode: function () {
-            console.log(this.$refs);
+            console.log(this.$refs.edit);
             this.$emit('switch-to-editing-mode', this.item);
         },
         switchToLeanMode: function () {
             this.$emit('switch-to-lean-mode', this.item);
         },
         setText: function () {
-            console.log(this.item.text);
-            console.log(this.newText);
             this.$emit('set-text', this.item, this.newText);
         },
         cancelEditingMode: function () {
@@ -44,6 +45,9 @@ Vue.component('todo-list', {
             nextId: 1,
             items: []
         }
+    },
+    mounted: function () {
+        this.$refs.input.focus();
     },
     methods: {
         addItem: function () {
@@ -100,5 +104,5 @@ Vue.component('todo-list', {
 })
 
 new Vue({
-    el: '#main-container'
+    el: '.main-container'
 })
