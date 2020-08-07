@@ -20,11 +20,17 @@ Vue.component('list-item', {
             this.$emit('delete-item', this.item);
         },
         switchToExtendedMode: function () {
+            if (this.item.isEditing) {
+                return;
+            }
+
             this.$emit('switch-to-extended-mode', this.item);
         },
         switchToEditingMode: function () {
             this.$emit('switch-to-editing-mode', this.item);
-            this.$refs.edit.select();                               //TODO вызываем .select() у textarea
+            this.nextTick(function () {
+                this.$refs.edit.select();                               //TODO вызываем .select() у textarea
+            });
         },
         switchToLeanMode: function () {
             this.$emit('switch-to-lean-mode', this.item);
