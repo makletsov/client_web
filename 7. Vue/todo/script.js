@@ -8,7 +8,7 @@ Vue.component('list-item', {
     data: function () {
         return {
             newText: this.item.text
-        }
+        };
     },
     computed: {
         isInvalid: function () {
@@ -28,8 +28,8 @@ Vue.component('list-item', {
         },
         switchToEditingMode: function () {
             this.$emit('switch-to-editing-mode', this.item);
-            this.nextTick(function () {
-                this.$refs.edit.select();                               //TODO вызываем .select() у textarea
+            this.$nextTick(function () {
+                this.$refs.edit.select();
             });
         },
         switchToLeanMode: function () {
