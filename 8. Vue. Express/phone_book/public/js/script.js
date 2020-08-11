@@ -17,36 +17,42 @@ var vm = new Vue({
     el: '#app',
     data: {
         contacts: [],
-        contact: {
-            newFirstName: {
+        checkedContacts: [],
+        newContact: {
+            firstName: {
                 value: '',
                 error: '',
-                validation: {
-                    isValid: false,
-                    isInvalid: false
-                }
+                isValid: false,
+                isInvalid: false
             },
-            newLastName: {
+            lastName: {
                 value: '',
                 error: '',
-                validation: {
-                    isValid: false,
-                    isInvalid: false
-                }
+                isValid: false,
+                isInvalid: false
             },
-            newPhone: {
+            phone: {
                 value: '',
                 error: '',
-                validation: {
-                    isValid: false,
-                    isInvalid: false
-                }
+                isValid: false,
+                isInvalid: false
             }
         },
         term: ''
     },
     created: function () {
         this.loadContacts();
+    },
+    computed: {
+        isNoContactsExists: function () {
+            return this.contacts.length === 0;
+        },
+        isAllContactsChecked: function () {
+            return this.contacts.length === this.checkedContacts.length;
+        },
+        isSomeContactsChecked: function () {
+            return this.checkedContacts.length !== 0;
+        }
     },
     methods: {
         loadContacts: function () {
@@ -74,39 +80,51 @@ var vm = new Vue({
             function validateProperty(property, regexp, propertyString) {
                 if (!property.value) {
                     property.error = 'Insert ' + propertyString + '!';
-                    property.validation.isValid = false;
-                    property.validation.isInvalid = true;
+                    property.isValid = false;
+                    property.isInvalid = true;
                 } else if (!checkPropertyText(property.value, regexp)) {
                     property.error = 'Insert correct ' + propertyString + '!';
-                    property.validation.isValid = false;
-                    property.validation.isInvalid = true;
+                    property.isValid = false;
+                    property.isInvalid = true;
                 } else {
                     property.error = '';
-                    property.validation.isValid = true;
-                    property.validation.isInvalid = false;
+                    property.isValid = true;
+                    property.isInvalid = false;
                 }
             }
 
-            for (var property in this.contact) {
-                if (this.contact.hasOwnProperty(property)) {
-                    this.contact[property].value = this.contact[property].value.trim();
+            function isPhoneRepetitive(phone) {
+                return this.contacts.some(function (contact) {
+                    return contact.phone === phone;
+                });
+            }
+
+            for (var property in this.newContact) {
+                if (this.newContact.hasOwnProperty(property)) {
+                    this.newContact[property].value = this.newContact[property].value.trim();
                 }
             }
 
             var nameRegExp = /[a-zA-Zа-яА-ЯёЁ]+[-?a-zA-Zа-яА-ЯёЁ]*/g;
 
-            validateProperty(this.contact.newFirstName, nameRegExp, 'first name');
-            validateProperty(this.contact.newLastName, nameRegExp, 'last name');
+            validateProperty(this.newContact.firstName, nameRegExp, 'first name');
+            validateProperty(this.newContact.lastName, nameRegExp, 'last name');
 
             var phoneRegExp = /^\+?[0-9]+/g;
 
-            this.contact.newPhone.value = normalisePhoneNumber(this.contact.newPhone.value);
+            this.newContact.phone.value = normalisePhoneNumber(this.newContact.phone.value);
 
-            validateProperty(this.contact.newPhone, phoneRegExp, 'phone number');
+            validateProperty(this.newContact.phone, phoneRegExp, 'phone number');
 
-            if (this.contact.newFirstName.validation.isInvalid
-                || this.contact.newLastName.validation.isInvalid
-                || this.contact.newPhone.validation.isInvalid) {
+            if (isPhoneRepetitive.call(this, this.newContact.phone.value)) {
+                this.newContact.phone.error = 'A contact with the given phone number is already exist!';
+                this.newContact.phone.isValid = false;
+                this.newContact.phone.isInvalid = true;
+            }
+
+            if (this.newContact.firstName.isInvalid
+                || this.newContact.lastName.isInvalid
+                || this.newContact.phone.isInvalid) {
                 return;
             }
 
@@ -114,9 +132,9 @@ var vm = new Vue({
 
             post('contacts/add', {
                 contact: {
-                    firstName: this.contact.newFirstName.value,
-                    lastName: this.contact.newLastName.value,
-                    phone: this.contact.newPhone.value
+                    firstName: this.newContact.firstName.value,
+                    lastName: this.newContact.lastName.value,
+                    phone: this.newContact.phone.value
                 }
             }).done(function () {
                 self.loadContacts();
@@ -126,19 +144,19 @@ var vm = new Vue({
                 }
             });
 
-            for (property in this.contact) {
-                if (this.contact.hasOwnProperty(property)) {
-                    this.contact[property].value = '';
-                    this.contact[property].validation.isInvalid = false;
-                    this.contact[property].validation.isValid = false;
+            for (property in this.newContact) {
+                if (this.newContact.hasOwnProperty(property)) {
+                    this.newContact[property].value = '';
+                    this.newContact[property].isInvalid = false;
+                    this.newContact[property].isValid = false;
                 }
             }
         },
-        deleteContact: function (contact) {
+        deleteContacts: function (identities) {
             var self = this;
 
             post('/contacts/delete', {
-                id: contact.id
+                ids: identities
             }).done(function (data) {
                 if (!data.success) {
                     alert(data.message);
@@ -149,6 +167,22 @@ var vm = new Vue({
             }).fail(function () {
                 alert('Contact deletion error!');
             });
+        },
+        toggleAllContacts: function (e) {
+            if (e.target.checked) {
+                this.checkedContacts = this.contacts.map(function (contact) {
+                    return contact.id;
+                });
+            } else {
+                this.checkedContacts = [];
+            }
+        },
+        clearCheckedContactsList: function () {
+            this.checkedContacts = [];
+        },
+        deleteCheckedContacts: function () {
+            this.deleteContacts(this.checkedContacts);
+            this.clearCheckedContactsList();
         }
     }
 });

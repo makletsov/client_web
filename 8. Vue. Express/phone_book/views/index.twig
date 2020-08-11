@@ -17,7 +17,9 @@
                   <tr>
                       <th>
                           <input type="checkbox"
-                                 disabled>
+                                 :disabled="isNoContactsExists"
+                                 :checked="isAllContactsChecked"
+                                 @input="toggleAllContacts($event)">
                       </th>
                       <th>№</th>
                       <th>First name</th>
@@ -30,7 +32,9 @@
                       <tr v-for="(contact, index) in contacts"
                           :key="contact.id">
                           <td>
-                              <input type="checkbox">
+                              <input type="checkbox"
+                                     :value="contact.id"
+                                     v-model="checkedContacts">
                           </td>
                           <td>{{ index + 1 }}</td>
                           <td>{{ contact.firstName }}</td>
@@ -39,14 +43,15 @@
                           <td>
                               <button type="button"
                                       class="close"
-                                      @click="deleteContact(contact)">&times;</button>
+                                      @click="deleteContacts([contact.id])">&times;</button>
                           </td>
                       </tr>
                   </tbody>
               </table>
-              <div>
+              <div v-show="isSomeContactsChecked">
                   <button type="button"
-                          class="btn btn-dark">Delete</button>
+                          class="btn btn-dark"
+                          @click="deleteCheckedContacts">Delete</button>
               </div>
           </div>
 
@@ -57,11 +62,11 @@
                   <input type="text"
                          class="form-control"
                          placeholder="First name"
-                         v-model="contact.newFirstName.value"
-                         v-bind:class="{ 'is-valid': contact.newFirstName.validation.isValid, 'is-invalid': contact.newFirstName.validation.isInvalid }"
+                         v-model="newContact.firstName.value"
+                         v-bind:class="{ 'is-valid': newContact.firstName.isValid, 'is-invalid': newContact.firstName.isInvalid }"
                          required>
                   <div class="invalid-feedback">
-                        {{ contact.newFirstName.error }}
+                        {{ newContact.firstName.error }}
                   </div>
               </div>
               <div class="form-group">
@@ -69,11 +74,11 @@
                   <input type="text"
                          class="form-control"
                          placeholder="Last name"
-                         v-model="contact.newLastName.value"
-                         v-bind:class="{ 'is-valid': contact.newLastName.validation.isValid, 'is-invalid': contact.newLastName.validation.isInvalid }"
+                         v-model="newContact.lastName.value"
+                         v-bind:class="{ 'is-valid': newContact.lastName.isValid, 'is-invalid': newContact.lastName.isInvalid }"
                          required>
                   <div class="invalid-feedback">
-                        {{ contact.newLastName.error }}
+                        {{ newContact.lastName.error }}
                   </div>
               </div>
               <div class="form-group">
@@ -81,11 +86,11 @@
                   <input type="text"
                          class="form-control"
                          placeholder="Phone"
-                         v-model="contact.newPhone.value"
-                         v-bind:class="{ 'is-valid': contact.newPhone.validation.isValid, 'is-invalid': contact.newPhone.validation.isInvalid }"
+                         v-model="newContact.phone.value"
+                         v-bind:class="{ 'is-valid': newContact.phone.isValid, 'is-invalid': newContact.phone.isInvalid }"
                          required>
                   <div class="invalid-feedback">
-                       {{ contact.newPhone.error }}
+                       {{ newContact.phone.error }}
                   </div>
               </div>
               <div class="row justify-content-center">

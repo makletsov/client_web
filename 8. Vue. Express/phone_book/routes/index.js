@@ -16,19 +16,23 @@ router.get('/contacts', function(req, res) {
 });
 
 router.post('/contacts/delete', function (req, res) {
-  var id = +req.body.id;
+  var ids = req.body.ids;
   var message = '';
 
-  var hasContact = contacts.some(function (contact) {
-    return contact.id === id;
-  });
+  for (var i = 0; i < ids.length; i++) {
+    var id = ids[i];
 
-  if (hasContact) {
-    contacts = contacts.filter(function (contact) {
-      return contact.id !== id;
+    var hasContact = contacts.some(function (contact) {
+      return contact.id === id;
     });
-  } else {
-    message = 'Contact with given id isn\'t exists!';
+
+    if (hasContact) {
+      contacts = contacts.filter(function (contact) {
+        return contact.id !== id;
+      });
+    } else {
+      message += 'Contact with given id = ' + id + ' isn\'t exists! ';
+    }
   }
 
   res.send({
