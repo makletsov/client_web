@@ -40,11 +40,7 @@ $(function () {
             return $(checkbox).is(':checked');
         });
 
-        if (areSomeChecked) {
-            element.show();
-        } else {
-            element.hide();
-        }
+        element.toggle(areSomeChecked);
     }
 
     function toggleIfAllChecked(element) {
@@ -97,18 +93,14 @@ $(function () {
     var recordsCount = 0;
 
     var $highlightAllCheckbox = $('#highlight-all-checkbox');
+    var $deleteSomeLinesButton = $('#delete-some-lines-button');
 
     $highlightAllCheckbox.click(function () {
-        if ($highlightAllCheckbox.is(':checked')) {
-            $('.highlight-row-checkbox').prop('checked', true);
-            $deleteSomeLinesButton.show();
-        } else {
-            $('.highlight-row-checkbox').prop('checked', false);
-            $deleteSomeLinesButton.hide();
-        }
-    });
+        var isChecked = $highlightAllCheckbox.prop('checked');
 
-    var $deleteSomeLinesButton = $('#delete-some-lines-button');
+        $('.highlight-row-checkbox').prop('checked', isChecked);
+        $deleteSomeLinesButton.toggle(isChecked);
+    });
 
     $deleteSomeLinesButton.confirmation({
         rootSelector: '#delete-all-button',
@@ -179,12 +171,16 @@ $(function () {
                 .addClass('phone-number')
                 .text(phone))
             .append($('<td>')
-                .append($('<button>')
+                .append($('<button title="Delete"></button>')
                     .addClass('close delete-row')
-                    .append($('<label>')
-                        .html('&times;'))));
+                    .attr('data-toggle', 'tooltip')
+                    .attr('data-placement', 'left')
+                    .attr({'title': 'Удалить контакт'})
+                    .html('&times;')));
 
         $('tbody').append(newRow);
+
+        $('[data-toggle="tooltip"]').tooltip();
 
         $highlightAllCheckbox.prop('disabled', false);
 
