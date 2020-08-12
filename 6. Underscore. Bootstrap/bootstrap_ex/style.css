@@ -1,5 +1,10 @@
+html {
+    height: 100%;
+}
+
 body {
     background: #cfcccc;
+    min-height: 100%;
 }
 
 .main-container {
@@ -71,7 +76,7 @@ body {
 
 .edit-text-field::selection,
 .note-input-field::selection {
-    color: #ffffff;
+    color: #fff;
     background-color: #343a40;
 }
 

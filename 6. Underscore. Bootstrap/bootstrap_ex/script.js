@@ -101,8 +101,8 @@ $(function () {
                     event.stopPropagation();
                     $editTextField.removeClass('is-invalid');
 
-                    if ($editTextField.val()) {
-                        inputText = $editTextField.val();
+                    if ($editTextField.val().trim()) {
+                        inputText = $editTextField.val().trim();
                         switchToViewMode();
                     } else {
                         $editTextField.addClass('is-invalid');
@@ -122,7 +122,8 @@ $(function () {
                 rootSelector: '.delete-button',
                 singleton: true,
                 placement: 'bottom',
-                title: 'Are you shure?',
+                title: 'Are you sure?',
+                popout: true,
                 buttons: [
                     {
                         class: 'btn btn-danger',
@@ -146,10 +147,6 @@ $(function () {
             });
 
             $noteInputField.focus();
-
-            $('html').click(function () {
-                $deleteButton.confirmation('hide');
-            });
         }
 
         switchToViewMode();
