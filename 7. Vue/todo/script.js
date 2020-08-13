@@ -56,7 +56,7 @@ Vue.component('confirmation-dialog', {
             type: Object,
             required: true
         },
-        modal: {
+        isModalShown: {
             type: Boolean,
             required: true
         }
@@ -80,7 +80,7 @@ Vue.component('todo-list', {
             items: [],
             isInvalidInput: false,
             currentItem: {},
-            modal: false
+            isModalShown: false
         }
     },
     mounted: function () {
@@ -106,14 +106,14 @@ Vue.component('todo-list', {
             this.inputText = '';
             this.$nextTick(function () {
                 this.$refs.input.focus();
-            })
+            });
         },
         deleteItem: function (item) {
             this.items = this.items.filter(function (current) {
                 return current !== item;
             });
 
-            this.modal = false;
+            this.isModalShown = false;
         },
         switchItemToExtendedMode: function (item) {
             this.switchAllItemsToLeanMode();
@@ -147,10 +147,10 @@ Vue.component('todo-list', {
         },
         showModal: function (item) {
             this.currentItem = item;
-            this.modal = true;
+            this.isModalShown = true;
         },
         hideModal: function () {
-            this.modal = false;
+            this.isModalShown = false;
         }
     },
     template: '#todo-list-template'
