@@ -20,6 +20,7 @@ body {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     margin-left: -1px;
+    box-shadow: none;
 }
 
 .list-item {
@@ -78,8 +79,30 @@ body {
 .btn-danger,
 .btn-danger:not(:disabled):not(.disabled):focus,
 .btn-danger:not(:disabled):not(.disabled):active,
+.btn-danger:not(:disabled):not(.disabled):active:focus,
 .btn-danger:not(:disabled):not(.disabled):hover {
     border-color: #343a40;
     border-style: solid;
     border-width: 1px;
+    box-shadow: none;
+}
+
+.btn-dark,
+.btn-dark:not(:disabled):not(.disabled):focus,
+.btn-dark:not(:disabled):not(.disabled):active,
+.btn-dark:not(:disabled):not(.disabled):active:focus,
+.btn-dark:not(:disabled):not(.disabled):hover {
+    box-shadow: none;
+}
+
+div.modal {
+    display: flex;
+    justify-content: center;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
 }

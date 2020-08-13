@@ -16,8 +16,8 @@ Vue.component('list-item', {
         }
     },
     methods: {
-        deleteItem: function () {
-            this.$emit('delete-item', this.item);
+        requestConfirmation: function () {
+            this.$emit('request-confirmation', this.item);
         },
         switchToExtendedMode: function () {
             if (this.item.isEditing) {
@@ -50,13 +50,37 @@ Vue.component('list-item', {
     template: '#list-item-template'
 });
 
+Vue.component('confirmation-dialog', {
+    props: {
+        item: {
+            type: Object,
+            required: true
+        },
+        modal: {
+            type: Boolean,
+            required: true
+        }
+    },
+    methods: {
+        deleteItem: function () {
+            this.$emit('delete-item', this.item);
+        },
+        hideDialog: function () {
+            this.$emit('hide-dialog');
+        }
+    },
+    template: '#confirmation-dialog-template'
+});
+
 Vue.component('todo-list', {
     data: function () {
         return {
             inputText: '',
             nextId: 1,
             items: [],
-            isInvalidInput: false
+            isInvalidInput: false,
+            currentItem: {},
+            modal: false
         }
     },
     mounted: function () {
@@ -80,11 +104,16 @@ Vue.component('todo-list', {
 
             this.nextId++;
             this.inputText = '';
+            this.$nextTick(function () {
+                this.$refs.input.focus();
+            })
         },
         deleteItem: function (item) {
             this.items = this.items.filter(function (current) {
                 return current !== item;
-            })
+            });
+
+            this.modal = false;
         },
         switchItemToExtendedMode: function (item) {
             this.switchAllItemsToLeanMode();
@@ -115,6 +144,13 @@ Vue.component('todo-list', {
         },
         hideInputWarning: function () {
             this.isInvalidInput = false;
+        },
+        showModal: function (item) {
+            this.currentItem = item;
+            this.modal = true;
+        },
+        hideModal: function () {
+            this.modal = false;
         }
     },
     template: '#todo-list-template'

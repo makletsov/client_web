@@ -43,13 +43,19 @@
                 <list-item v-for="item in items"
                            :key="item.id"
                            :item="item"
-                           @delete-item="deleteItem"
+                           @request-confirmation="showModal"
                            @switch-to-extended-mode="switchItemToExtendedMode"
                            @switch-to-editing-mode="switchItemToEditingMode"
                            @switch-to-lean-mode="switchItemToLeanMode"
                            @set-text="setItemText"
                 ></list-item>
             </ul>
+
+            <confirmation-dialog :item="currentItem"
+                                 :modal="modal"
+                                 @delete-item="deleteItem"
+                                 @hide-dialog="hideModal"
+            ></confirmation-dialog>
         </div>
     </script>
 
@@ -84,7 +90,7 @@
 
                 <button ref="deleteButton"
                         type="button"
-                        @click="deleteItem"
+                        @click="requestConfirmation"
                         class="delete btn btn-danger"
                         data-toggle="confirmation"
                 >Delete</button>
@@ -102,6 +108,33 @@
                 >Cancel</button>
             </div>
         </li>
+    </script>
+
+    <script id="confirmation-dialog-template" type="text/x-template">
+        <div>
+            <div v-show="modal" class="modal-backdrop show"></div>
+            <transition name="fade">
+                <div v-show="modal" class="modal show">
+                    <div class="modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete confirmation</h5>
+                                <button type="button" class="close" aria-label="Close" @click="hideDialog">
+                                     <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-dark" data-dismiss="modal" @click="hideDialog">No</button>
+                                <button type="button" class="btn btn-danger" @click="deleteItem">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
     </script>
 
     <script src="node_modules/jquery/dist/jquery.js"></script>
