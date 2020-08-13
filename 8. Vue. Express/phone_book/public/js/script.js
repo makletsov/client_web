@@ -16,8 +16,12 @@ function post(url, data) {
 var vm = new Vue({
     el: '#app',
     data: {
+        needSingleDeletionConfirmation: false,
+        needCheckedDeletionConfirmation: false,
+        showModal: false,
         contacts: [],
         checkedContacts: [],
+        singleDeletionId: null,
         newContact: {
             firstName: {
                 value: '',
@@ -152,6 +156,18 @@ var vm = new Vue({
                 }
             }
         },
+        toggleAllContacts: function (e) {
+            if (e.target.checked) {
+                this.checkedContacts = this.contacts.map(function (contact) {
+                    return contact.id;
+                });
+            } else {
+                this.checkedContacts = [];
+            }
+        },
+        clearCheckedContactsList: function () {
+            this.checkedContacts = [];
+        },
         deleteContacts: function (identities) {
             var self = this;
 
@@ -168,21 +184,35 @@ var vm = new Vue({
                 alert('Contact deletion error!');
             });
         },
-        toggleAllContacts: function (e) {
-            if (e.target.checked) {
-                this.checkedContacts = this.contacts.map(function (contact) {
-                    return contact.id;
-                });
-            } else {
-                this.checkedContacts = [];
-            }
-        },
-        clearCheckedContactsList: function () {
-            this.checkedContacts = [];
-        },
         deleteCheckedContacts: function () {
             this.deleteContacts(this.checkedContacts);
             this.clearCheckedContactsList();
+        },
+        toggleModal: function () {
+            this.showModal = !this.showModal;
+            this.needSingleDeletionConfirmation = false;
+            this.needCheckedDeletionConfirmation = false;
+        },
+        getSingleDeletionConfirmation: function (id) {
+            this.singleDeletionId = id;
+            //console.log(id);
+            this.needSingleDeletionConfirmation = true;
+            this.showModal = true;
+        },
+        getCheckedDeletionConfirmation: function () {
+            this.needCheckedDeletionConfirmation = true;
+            this.showModal = true;
+        },
+        confirmSingleDeletion: function () {
+            this.deleteContacts([this.singleDeletionId]);
+            this.needSingleDeletionConfirmation = false;
+            this.showModal = false;
+            this.checkedContacts = [];
+        },
+        confirmCheckedDeletion: function () {
+            this.deleteCheckedContacts();
+            this.needCheckedDeletionConfirmation = false;
+            this.showModal = false;
         }
     }
 });

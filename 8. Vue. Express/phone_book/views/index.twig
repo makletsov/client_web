@@ -1,7 +1,7 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  {% verbatim %}
+    {% verbatim %}
 
   <div id="app"
        class="container"
@@ -43,7 +43,7 @@
                           <td>
                               <button type="button"
                                       class="close"
-                                      @click="deleteContacts([contact.id])">&times;</button>
+                                      @click="getSingleDeletionConfirmation(contact.id)">&times;</button>
                           </td>
                       </tr>
                   </tbody>
@@ -51,7 +51,8 @@
               <div v-show="isSomeContactsChecked">
                   <button type="button"
                           class="btn btn-dark"
-                          @click="deleteCheckedContacts">Delete</button>
+                          @click="getCheckedDeletionConfirmation"
+                          >Delete</button>
               </div>
           </div>
 
@@ -100,6 +101,30 @@
               </div>
           </form>
       </div>
+
+      <div v-show="showModal" class="modal-backdrop show"></div>
+      <transition name="fade">
+          <div v-show="showModal" class="modal" :class="[showModal ? 'show' : 'fade']">
+              <div class="modal-dialog-centered">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Delete confirmation</h5>
+                          <button type="button" class="close" aria-label="Close" @click="toggleModal">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                  <div class="modal-body">
+                      Are you sure?
+                  </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="toggleModal">No</button>
+                          <button v-show="needSingleDeletionConfirmation" type="button" class="btn btn-primary" @click="confirmSingleDeletion">Yes</button>
+                          <button v-show="needCheckedDeletionConfirmation" type="button" class="btn btn-primary" @click="confirmCheckedDeletion">Yes</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </transition>
   </div>
 
   {% endverbatim %}
