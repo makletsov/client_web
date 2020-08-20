@@ -65,7 +65,6 @@
             <div v-show="item.isEditing">
                 <textarea ref="edit"
                           @click.stop="$event.target.select()"
-                          @input="isInvalid = (newText.trim().length === 0)"
                           v-model="newText"
                           class="edit-text-field form-control col-12"
                           :class="{'is-invalid': isInvalid }"
