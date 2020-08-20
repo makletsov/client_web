@@ -68,16 +68,31 @@ body {
     transition: visibility 0s linear, opacity 0.3s ease-in-out, height 0.3s ease-in-out;
 }
 
+.edit-text-field,
+.note-input-field {
+    border-color: #647480;
+    border-width: 1px;
+    outline: #1b1e21 none 0;
+}
+
 .edit-text-field:focus,
 .note-input-field:focus {
     border-color: #647480;
     box-shadow: none;
+    border-width: 1px;
+    outline: #1b1e21 none 0;
 }
 
 .edit-text-field::selection,
 .note-input-field::selection {
     color: #fff;
     background-color: #343a40;
+}
+
+.note-input-field,
+.note-input-field:focus {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 
 .cancel-button,
